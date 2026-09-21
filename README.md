@@ -59,7 +59,7 @@ src/content/images.ts    фотографии для слотов макета
 ```bash
 # на сервере
 git clone <репозиторий> /opt/technolider-site-frontend && cd /opt/technolider-site-frontend   # или скопируйте папку по scp/rsync
-cp .env.example .env && nano .env      # NEXT_PUBLIC_SITE_URL=https://ваш-домен.ru (+ счётчики, если есть)
+cp .env.example .env && nano .env      # NEXT_PUBLIC_SITE_URL=https://npp-technolider.ru (+ счётчики, если есть)
 docker compose up -d --build           # сборка ~2–3 мин, контейнер слушает 127.0.0.1:3000
 curl -s http://127.0.0.1:3000/api/health   # → {"ok":true,...}
 ```
@@ -76,7 +76,7 @@ cd /opt/technolider-site-frontend && bash deploy/deploy.sh   # git pull → пе
 Если на сервере нет доступа к репозиторию, соберите образ локально и перенесите файлом:
 
 ```bash
-docker build --build-arg NEXT_PUBLIC_SITE_URL=https://ваш-домен.ru -t technolider-site-frontend:latest .
+docker build --build-arg NEXT_PUBLIC_SITE_URL=https://npp-technolider.ru -t technolider-site-frontend:latest .
 docker save technolider-site-frontend:latest | gzip > technolider-site-frontend.tar.gz
 scp technolider-site-frontend.tar.gz user@server:/opt/technolider-site-frontend/
 # на сервере:
@@ -86,6 +86,13 @@ docker load < technolider-site-frontend.tar.gz && docker compose up -d
 Полезное: `docker compose logs -f` — логи (сюда же пишутся заявки с формы, пока не
 подключена почта); `SITE_PORT=3001` в `.env` — если порт 3000 занят. Переменные
 `NEXT_PUBLIC_*` вшиваются в сборку, поэтому после их изменения нужен `--build`.
+
+## Доступ по паролю
+
+Весь сайт закрыт HTTP Basic Auth (`src/proxy.ts`): логин и пароль — `proton` / `proton`,
+задаются переменными `BASIC_AUTH_USER` / `BASIC_AUTH_PASS`; `BASIC_AUTH=off` отключает
+защиту. Переменные читаются при запуске (в Docker — из `.env` без пересборки).
+Healthcheck `/api/health` открыт. Перед публичным запуском защиту нужно выключить.
 
 ## SEO
 

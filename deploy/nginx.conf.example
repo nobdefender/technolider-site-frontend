@@ -1,15 +1,15 @@
 # Пример конфига nginx на сервере: /etc/nginx/sites-available/technolider
-# Замените example.ru на свой домен. HTTPS — через certbot:
-#   sudo certbot --nginx -d example.ru -d www.example.ru
+# Домен: npp-technolider.ru. HTTPS — через certbot:
+#   sudo certbot --nginx -d npp-technolider.ru -d www.npp-technolider.ru
 
 server {
     listen 80;
     listen [::]:80;
-    server_name example.ru www.example.ru;
+    server_name npp-technolider.ru www.npp-technolider.ru;
 
     # www → без www (после выпуска сертификата certbot добавит редирект на https)
-    if ($host = www.example.ru) {
-        return 301 https://example.ru$request_uri;
+    if ($host = www.npp-technolider.ru) {
+        return 301 https://npp-technolider.ru$request_uri;
     }
 
     location / {
