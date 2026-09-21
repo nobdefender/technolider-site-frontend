@@ -9,6 +9,12 @@ import { NextResponse, type NextRequest } from 'next/server';
 const USER = process.env.BASIC_AUTH_USER || 'proton';
 const PASS = process.env.BASIC_AUTH_PASS || 'proton';
 const ENABLED = (process.env.BASIC_AUTH || 'on').toLowerCase() !== 'off';
+// Боты превью ссылок (Telegram, WhatsApp, VK, Max…) пропускаются без пароля, иначе у ссылки
+// в мессенджере не будет картинки и описания. Поисковые роботы сюда не входят — им по-прежнему 401.
+// BASIC_AUTH_ALLOW_PREVIEW=off — запретить и ботам превью.
+const ALLOW_PREVIEW = (process.env.BASIC_AUTH_ALLOW_PREVIEW || 'on').toLowerCase() !== 'off';
+const PREVIEW_BOTS =
+  /TelegramBot|WhatsApp|vkShare|MaxBot|facebookexternalhit|Facebot|Twitterbot|Slackbot|Discordbot|LinkedInBot|Viber|SkypeUriPreview|Iframely/i;
 
 function decode(b64: string): string {
   try {
@@ -20,6 +26,7 @@ function decode(b64: string): string {
 
 export function proxy(req: NextRequest) {
   if (!ENABLED) return NextResponse.next();
+  if (ALLOW_PREVIEW && PREVIEW_BOTS.test(req.headers.get('user-agent') || '')) return NextResponse.next();
 
   const header = req.headers.get('authorization') || '';
   if (header.startsWith('Basic ')) {

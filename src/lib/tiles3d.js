@@ -483,7 +483,9 @@ function easeScrollTo(top, duration = 1100) {
   requestAnimationFrame(step);
 }
 const instances = new Set();
-const MAX = 4;
+// одновременно живых WebGL-контекстов; на главной их шесть — иначе при прокрутке модели
+// в ещё видимых плитках засыпали и резко пропадали
+const MAX = 6;
 const centerDist = (el) => { const r = el.getBoundingClientRect(); return Math.abs(r.top + r.height / 2 - innerHeight / 2); };
 let loop = null;
 
@@ -552,8 +554,11 @@ class Tile3D extends HTMLElement {
     if (this.renderer || this._dead) return;
     const live = [...instances].filter(i => i.renderer && i !== this).sort((a, b) => centerDist(b) - centerDist(a));
     const mine = centerDist(this);
-    while (live.length >= MAX) { const far = live[0]; if (centerDist(far) <= mine) return; far.sleep(); live.shift(); }
-    const canvas = document.createElement('canvas'); canvas.style.cssText = 'width:100%;height:100%;display:block'; this.appendChild(canvas);
+    // усыпляем только те, что уже ушли с экрана; видимые не трогаем (иначе модель исчезает на глазах)
+    while (live.length >= MAX) { const far = live[0]; if (far.visible || centerDist(far) <= mine) return; far.sleep(); live.shift(); }
+    // холст появляется плавно: прозрачность растёт после первого отрисованного кадра
+    const canvas = document.createElement('canvas'); canvas.style.cssText = 'width:100%;height:100%;display:block;opacity:0;transition:opacity .9s cubic-bezier(.2,.7,.2,1)'; this.appendChild(canvas);
+    this._shown = false;
     try { this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'low-power' }); } catch (e) { this.removeChild(canvas); this._dead = true; return; }
     canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); this.sleep(); });
     this.renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
@@ -569,6 +574,7 @@ class Tile3D extends HTMLElement {
     this.pivot = new THREE.Group();
     if (this.mode === 'explode') { this.parts = (EX[this.kind] || exHousing)(M(), this.pivot); }
     else { this.model = (BUILD[this.kind] || flange)(M()); this.pivot.add(this.model); }
+    if (this.mode === 'tile') this.scale = 0.86;
     this.pivot.position.y = this.mode === 'explode' ? -f.y : f.y; this.pivot.scale.setScalar(this.scale == null ? 1 : this.scale); this.scene.add(this.pivot); this.baseY = this.pivot.position.y;
     this.resize();
   }
@@ -667,7 +673,7 @@ class Tile3D extends HTMLElement {
       }
       }
       if (this.steps.length) { const act = Math.min(this.steps.length - 1, Math.floor(p * this.steps.length * 0.999)); if (act !== this._act) { this._act = act; this.steps.forEach((s, i) => i <= act ? s.setAttribute('data-on', '') : s.removeAttribute('data-on')); } }
-      this.renderer.render(this.scene, this.camera); return;
+      this.renderer.render(this.scene, this.camera); this.reveal(); return;
     }
     this.speed += (this.targetSpeed - this.speed) * 0.06; if (this.mode === 'hero') { const target = 0.35 + Math.sin(performance.now() / 5000) * 0.45 + (this.scrollY || 0) * 0.0015; this.rotY += (target - this.rotY) * 0.03; } else this.rotY += this.speed;
     this.tiltX += (this.tTiltX - this.tiltX) * 0.08; this.tiltZ += (this.tTiltZ - this.tiltZ) * 0.08; this.scale += (this.tScale - this.scale) * 0.08;
@@ -675,7 +681,8 @@ class Tile3D extends HTMLElement {
     else { const mo = this.mo, ms = now; this.pivot.rotation.set(this.tiltX + mo.baseX + Math.sin(ms / mo.per) * mo.rock, this.rotY, this.tiltZ + Math.cos(ms / mo.rper) * mo.roll); this.pivot.position.y = this.baseY + Math.sin(ms / mo.bper) * mo.bob; }
     this.pivot.scale.setScalar(this.scale);
     if (this.spot) { this.lightK += ((this.tLight || 0) - this.lightK) * 0.06; this.spot.intensity = this.lightK * 14; }
-    this.renderer.render(this.scene, this.camera);
+    this.renderer.render(this.scene, this.camera); this.reveal();
   }
+  reveal() { if (this._shown || !this.canvas) return; this._shown = true; const c = this.canvas; requestAnimationFrame(() => { c.style.opacity = '1'; }); }
 }
 if (!customElements.get('tile-3d')) customElements.define('tile-3d', Tile3D);

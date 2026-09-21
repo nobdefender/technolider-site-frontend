@@ -24,6 +24,7 @@ services:
       BASIC_AUTH: ${BASIC_AUTH:-on}
       BASIC_AUTH_USER: ${BASIC_AUTH_USER:-proton}
       BASIC_AUTH_PASS: ${BASIC_AUTH_PASS:-proton}
+      BASIC_AUTH_ALLOW_PREVIEW: ${BASIC_AUTH_ALLOW_PREVIEW:-on}
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
       interval: 30s

@@ -92,7 +92,9 @@ docker load < technolider-site-frontend.tar.gz && docker compose up -d
 Весь сайт закрыт HTTP Basic Auth (`src/proxy.ts`): логин и пароль — `proton` / `proton`,
 задаются переменными `BASIC_AUTH_USER` / `BASIC_AUTH_PASS`; `BASIC_AUTH=off` отключает
 защиту. Переменные читаются при запуске (в Docker — из `.env` без пересборки).
-Healthcheck `/api/health` открыт. Перед публичным запуском защиту нужно выключить.
+Healthcheck `/api/health` открыт; боты превью ссылок (Telegram, WhatsApp, VK, Max)
+пропускаются без пароля (`BASIC_AUTH_ALLOW_PREVIEW=off` — запретить). Перед публичным
+запуском защиту нужно выключить.
 
 ## SEO
 
