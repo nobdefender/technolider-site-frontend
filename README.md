@@ -98,21 +98,31 @@ Healthcheck `/api/health` открыт; боты превью ссылок (Tele
 
 ## SEO
 
-- Метаданные страниц (title, description, canonical, Open Graph, Twitter) —
+- Метаданные страниц (title, description, keywords, canonical, Open Graph, Twitter) —
   в `src/content/seo.ts`; собираются функцией `pageMetadata()` из `src/lib/seo.ts`.
+  `og:image` — всегда абсолютный URL из `NEXT_PUBLIC_SITE_URL` (Telegram, VK, WhatsApp
+  относительные не понимают), поэтому переменная должна быть задана при сборке.
 - Разметка schema.org (JSON-LD): `Organization` + `LocalBusiness` и `WebSite`
-  в layout; `BreadcrumbList`, `Service`, `AboutPage`, `ContactPage`,
-  `CollectionPage` на страницах (`src/lib/seo.ts`, компонент `JsonLd`).
-- `sitemap.xml` (с картинками), `robots.txt`, `manifest.webmanifest`,
-  `/llms.txt` и `/llms-full.txt` (описание сайта для ИИ-ассистентов,
-  формат llmstxt.org) — генерируются из `src/content/*`.
+  в layout; `BreadcrumbList`, `HowTo` (этапы работы на главной), `Service`,
+  `AboutPage`, `ContactPage`, `CollectionPage` на страницах (`src/lib/seo.ts`,
+  компонент `JsonLd`).
+- `sitemap.xml` (с картинками), `robots.txt` (поисковики и ИИ-краулеры разрешены явно),
+  `manifest.webmanifest`, `/llms.txt` и `/llms-full.txt` (описание сайта для
+  ИИ-ассистентов, формат llmstxt.org) — генерируются из `src/content/*`.
 - Open Graph картинка `public/og.png` (1200×630) и логотип `public/logo.png`
   (512×512) — статические файлы; при смене бренда перерисуйте их.
+- Фавиконки: исходник `public/favicon.svg`, остальные (`favicon.ico`, `favicon-96x96.png`,
+  `apple-touch-icon.png`, `web-app-manifest-*.png` для Android) генерируются командой
+  `npm run icons` (`scripts/gen-icons.mjs`, использует `sharp` из зависимостей Next).
+- `www.` → канонический хост: 308-редирект в `next.config.ts` (хост берётся из
+  `NEXT_PUBLIC_SITE_URL`), дублей страниц у поисковиков не будет.
 - Политика конфиденциальности закрыта от индексации (`noindex, follow`),
   страница 404 — тоже.
 - Alt-тексты фотографий — `imageAlts` в `src/content/images.ts`.
 - Яндекс Метрика подключается только при заданном `NEXT_PUBLIC_YM_ID` и
   считает переходы между страницами (SPA).
+- Если мессенджер не показывает превью ссылки, хотя теги на месте — у Telegram
+  закэширован старый ответ: отправьте ссылку боту `@WebpageBot`, он обновит кэш.
 
 ## Замечание о шрифтах
 

@@ -10,11 +10,14 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: '/',
     display: 'standalone',
     lang: 'ru',
-    background_color: '#f2f2f3',
+    background_color: '#1d2d3d',
     theme_color: '#1d2d3d',
+    // PNG с полем вокруг рисунка — подходят и как обычная иконка, и как maskable (Android)
     icons: [
-      { src: '/icon.svg', sizes: 'any', type: 'image/svg+xml' },
-      { src: '/logo.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+      { src: '/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+      { src: '/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
+      { src: '/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+      { src: '/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
     ],
   };
 }

@@ -6,7 +6,7 @@ import { TransitionLink } from '@/components/Transition';
 import { routes, site } from '@/content/site';
 import { JsonLd } from '@/components/JsonLd';
 import { seo } from '@/content/seo';
-import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
+import { breadcrumbJsonLd, howToJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata(seo.home);
 
@@ -59,7 +59,9 @@ function MarqueeRow() {
 export default function HomePage() {
   return (
     <main data-screen-label="Главная">
-      <JsonLd data={breadcrumbJsonLd([{ name: seo.home.crumb, path: seo.home.path }])} />
+      <JsonLd
+        data={[breadcrumbJsonLd([{ name: seo.home.crumb, path: seo.home.path }]), howToJsonLd()]}
+      />
       {/* Главный экран */}
       <section className="hero-root hero-home">
         <div className="hero-shade" />

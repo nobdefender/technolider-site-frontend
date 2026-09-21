@@ -47,6 +47,15 @@ export const metadata: Metadata = {
   creator: site.legalShort,
   publisher: site.legalShort,
   category: 'industrial',
+  // Фавиконки генерируются из public/favicon.svg: `npm run icons` (scripts/gen-icons.mjs)
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-96x96.png', type: 'image/png', sizes: '96x96' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
   robots: {
     index: true,
     follow: true,

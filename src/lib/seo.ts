@@ -1,16 +1,25 @@
 import type { Metadata } from 'next';
 import { knowsAbout, seo, services, type PageSeo } from '@/content/seo';
-import { routes, site, siteUrl } from '@/content/site';
-
-const OG_IMAGE = { url: '/og.png', width: 1200, height: 630, alt: `${site.legalShort} — ${site.tagline}` };
+import { routes, site, siteUrl, workSteps } from '@/content/site';
 
 export const abs = (path: string) => new URL(path, siteUrl).toString();
 
-/** Метаданные страницы: title, description, canonical, Open Graph, Twitter, robots. */
+// Абсолютный URL обязателен: Telegram/VK/WhatsApp не резолвят относительные og:image.
+const OG_IMAGE = {
+  url: abs('/og.png'),
+  secureUrl: abs('/og.png'),
+  type: 'image/png',
+  width: 1200,
+  height: 630,
+  alt: `${site.legalShort} — ${site.tagline}`,
+};
+
+/** Метаданные страницы: title, description, keywords, canonical, Open Graph, Twitter, robots. */
 export function pageMetadata(p: PageSeo): Metadata {
   return {
     title: { absolute: p.title },
     description: p.description,
+    keywords: p.keywords,
     alternates: { canonical: p.path },
     openGraph: {
       type: 'website',
@@ -145,5 +154,25 @@ export function webPageJsonLd(type: 'AboutPage' | 'ContactPage' | 'CollectionPag
     isPartOf: { '@id': SITE_ID },
     about: { '@id': ORG_ID },
     inLanguage: 'ru-RU',
+  };
+}
+
+/** Этапы работы с заказом (секция «Как мы работаем» на главной). */
+export function howToJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    '@id': abs('/#howto'),
+    name: 'Как заказать разработку или изготовление в НПП «Технолидер»',
+    description:
+      'От заявки с ТЗ, эскизом или образцом до готового изделия: анализ, согласование документации, производство с контролем ОТК, отгрузка.',
+    inLanguage: 'ru-RU',
+    step: workSteps.map((s, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: s.t,
+      // word joiner (U+2060) — только для вёрстки, в разметку не нужен
+      text: s.p.replace(/\u2060/g, ''),
+    })),
   };
 }
