@@ -1,4 +1,4 @@
-# Сайт ООО НПП «Технолидер»
+# technolider-site-frontend — сайт ООО НПП «Технолидер»
 
 Next.js 16 (App Router, TypeScript), three.js для 3D-объектов. Вёрстка перенесена
 один в один из макета Claude Design «Technolider Site v2».
@@ -49,13 +49,16 @@ src/content/images.ts    фотографии для слотов макета
 
 ## Деплой на сервер (Docker, вручную)
 
+Полная пошаговая инструкция — в [DEPLOY.md](DEPLOY.md) (репозиторий → Docker → nginx рядом
+с другим сайтом → HTTPS → обновления). Ниже — краткая версия.
+
 Нужны: сервер с Docker 24+ и `docker compose` (плагин v2), nginx для HTTPS.
 
 **Первый запуск**
 
 ```bash
 # на сервере
-git clone <репозиторий> /opt/technolider && cd /opt/technolider   # или скопируйте папку по scp/rsync
+git clone <репозиторий> /opt/technolider-site-frontend && cd /opt/technolider-site-frontend   # или скопируйте папку по scp/rsync
 cp .env.example .env && nano .env      # NEXT_PUBLIC_SITE_URL=https://ваш-домен.ru (+ счётчики, если есть)
 docker compose up -d --build           # сборка ~2–3 мин, контейнер слушает 127.0.0.1:3000
 curl -s http://127.0.0.1:3000/api/health   # → {"ok":true,...}
@@ -67,17 +70,17 @@ curl -s http://127.0.0.1:3000/api/health   # → {"ok":true,...}
 **Обновление**
 
 ```bash
-cd /opt/technolider && bash deploy/deploy.sh   # git pull → пересборка → перезапуск → проверка healthcheck
+cd /opt/technolider-site-frontend && bash deploy/deploy.sh   # git pull → пересборка → перезапуск → проверка healthcheck
 ```
 
 Если на сервере нет доступа к репозиторию, соберите образ локально и перенесите файлом:
 
 ```bash
-docker build --build-arg NEXT_PUBLIC_SITE_URL=https://ваш-домен.ru -t technolider-site:latest .
-docker save technolider-site:latest | gzip > technolider-site.tar.gz
-scp technolider-site.tar.gz user@server:/opt/technolider/
+docker build --build-arg NEXT_PUBLIC_SITE_URL=https://ваш-домен.ru -t technolider-site-frontend:latest .
+docker save technolider-site-frontend:latest | gzip > technolider-site-frontend.tar.gz
+scp technolider-site-frontend.tar.gz user@server:/opt/technolider-site-frontend/
 # на сервере:
-docker load < technolider-site.tar.gz && docker compose up -d
+docker load < technolider-site-frontend.tar.gz && docker compose up -d
 ```
 
 Полезное: `docker compose logs -f` — логи (сюда же пишутся заявки с формы, пока не

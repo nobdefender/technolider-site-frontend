@@ -1,4 +1,4 @@
-# Сайт ООО НПП «Технолидер»
+# technolider-site-frontend — сайт ООО НПП «Технолидер»
 #   1. cp .env.example .env  и заполнить NEXT_PUBLIC_SITE_URL (и при необходимости счётчики)
 #   2. docker compose up -d --build
 # Контейнер слушает только 127.0.0.1:3000 — наружу его публикует nginx (deploy/nginx.conf.example).
@@ -11,8 +11,8 @@ services:
         NEXT_PUBLIC_YM_ID: ${NEXT_PUBLIC_YM_ID:-}
         NEXT_PUBLIC_YANDEX_VERIFICATION: ${NEXT_PUBLIC_YANDEX_VERIFICATION:-}
         NEXT_PUBLIC_GOOGLE_VERIFICATION: ${NEXT_PUBLIC_GOOGLE_VERIFICATION:-}
-    image: technolider-site:latest
-    container_name: technolider-site
+    image: technolider-site-frontend:latest
+    container_name: technolider-site-frontend
     restart: unless-stopped
     ports:
       - "127.0.0.1:${SITE_PORT:-3000}:3000"

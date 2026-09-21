@@ -19,9 +19,9 @@ docker image prune -f >/dev/null
 
 echo "Ожидание готовности…"
 for i in $(seq 1 30); do
-  status=$(docker inspect -f '{{.State.Health.Status}}' technolider-site 2>/dev/null || echo starting)
+  status=$(docker inspect -f '{{.State.Health.Status}}' technolider-site-frontend 2>/dev/null || echo starting)
   if [ "$status" = "healthy" ]; then
-    echo "Готово: контейнер technolider-site работает (healthy)."
+    echo "Готово: контейнер technolider-site-frontend работает (healthy)."
     exit 0
   fi
   sleep 2
