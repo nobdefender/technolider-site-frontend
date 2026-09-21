@@ -1,0 +1,32 @@
+# Сайт ООО НПП «Технолидер»
+#   1. cp .env.example .env  и заполнить NEXT_PUBLIC_SITE_URL (и при необходимости счётчики)
+#   2. docker compose up -d --build
+# Контейнер слушает только 127.0.0.1:3000 — наружу его публикует nginx (deploy/nginx.conf.example).
+services:
+  site:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+        NEXT_PUBLIC_YM_ID: ${NEXT_PUBLIC_YM_ID:-}
+        NEXT_PUBLIC_YANDEX_VERIFICATION: ${NEXT_PUBLIC_YANDEX_VERIFICATION:-}
+        NEXT_PUBLIC_GOOGLE_VERIFICATION: ${NEXT_PUBLIC_GOOGLE_VERIFICATION:-}
+    image: technolider-site:latest
+    container_name: technolider-site
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${SITE_PORT:-3000}:3000"
+    env_file:
+      - path: .env
+        required: false
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
