@@ -128,31 +128,59 @@ export function PageEffects() {
       });
     };
 
-    // На телефонах (≤600px) заголовки первых экранов растягиваются на всю ширину:
-    // кегль подбирается так, чтобы самое длинное слово занимало ширину колонки.
-    const fitHeadings = () => {
-      document.querySelectorAll<HTMLElement>('main .hero-root h1').forEach((h) => {
-        if (window.innerWidth > 600) {
-          h.style.fontSize = '';
-          return;
+    // Подгонка кегля заголовков под реальную ширину текста (шрифт на iPhone шире, чем на Windows,
+    // поэтому формулы в CSS не гарантируют, что самое длинное слово поместится):
+    //  — любой заголовок ужимается, если его самое длинное слово шире контейнера;
+    //  — на телефонах (≤600px) заголовки первых экранов растягиваются на всю ширину.
+    // ширина самого длинного слова относительно кегля — меряется прямо в заголовке (Range),
+    // поэтому точна для любого шрифта (SF Pro на iPhone, Segoe UI на Windows и т.д.)
+    const wordRatio = (h: HTMLElement, fontSize: number) => {
+      let max = 0;
+      const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
+      const range = document.createRange();
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        const text = node.textContent || '';
+        // строка с white-space:nowrap не переносится — считаем её одним «словом»
+        const nowrap = node.parentElement && getComputedStyle(node.parentElement).whiteSpace === 'nowrap';
+        const re = nowrap ? /\S[\s\S]*\S|\S/g : /\S+/g;
+        let m: RegExpExecArray | null;
+        while ((m = re.exec(text))) {
+          range.setStart(node, m.index);
+          range.setEnd(node, m.index + m[0].length);
+          const rects = range.getClientRects();
+          // слово, разбитое на несколько строк, шире любой из них — берём сумму
+          let w = 0;
+          for (let i = 0; i < rects.length; i++) w += rects[i].width;
+          if (w > max) max = w;
         }
-        const cs = getComputedStyle(h);
-        const probe = document.createElement('span');
-        probe.style.cssText =
-          'position:absolute;visibility:hidden;white-space:nowrap;font-size:100px;letter-spacing:0.01em;' +
-          'font-family:' + cs.fontFamily + ';font-weight:' + cs.fontWeight + ';text-transform:' + cs.textTransform;
-        document.body.appendChild(probe);
-        let ratio = 0;
-        (h.textContent || '').split(/\s+/).forEach((w) => {
-          if (!w) return;
-          probe.textContent = w;
-          ratio = Math.max(ratio, probe.getBoundingClientRect().width / 100);
-        });
-        probe.remove();
-        if (!ratio) return;
-        const cap = 56;
-        const size = Math.max(24, Math.min(cap, (h.clientWidth - 2) / ratio));
-        h.style.fontSize = size.toFixed(1) + 'px';
+      }
+      return max / fontSize;
+    };
+    const fitHeadings = () => {
+      document.querySelectorAll<HTMLElement>('main h1, main h2, main h3, .about-quote').forEach((h) => {
+        h.style.fontSize = '';
+        h.style.maxWidth = '';
+        const base = parseFloat(getComputedStyle(h).fontSize);
+        const ratio = wordRatio(h, base);
+        const parent = h.parentElement;
+        if (!ratio || !parent) return;
+        const pcs = getComputedStyle(parent);
+        // доступная ширина — контентная ширина родителя (max-width заголовка в ch зависит от кегля,
+        // поэтому опираться на его собственную ширину нельзя)
+        const avail = parent.clientWidth - parseFloat(pcs.paddingLeft) - parseFloat(pcs.paddingRight) - 2;
+        const own = h.clientWidth - 2;
+        const need = ratio * base;
+        const isHero = window.innerWidth <= 600 && h.tagName === 'H1' && !!h.closest('.hero-root');
+        let size = base;
+        if (isHero) {
+          size = Math.max(16, Math.min(56, avail / ratio));
+          h.style.maxWidth = 'none';
+        } else if (need > own) {
+          // слово длиннее max-width заголовка: сначала даём заголовку всю ширину родителя, потом ужимаем кегль
+          h.style.maxWidth = 'none';
+          if (need > avail) size = Math.max(16, avail / ratio);
+        }
+        if (Math.abs(size - base) > 0.5) h.style.fontSize = size.toFixed(1) + 'px';
       });
     };
     let fitTimer = 0;
@@ -161,6 +189,7 @@ export function PageEffects() {
       fitTimer = window.setTimeout(fitHeadings, 120);
     };
     window.addEventListener('resize', onResize);
+    if (document.fonts?.ready) document.fonts.ready.then(fitHeadings).catch(() => {});
 
     let raf = requestAnimationFrame(() => {
       raf = requestAnimationFrame(() => {
