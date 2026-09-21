@@ -53,6 +53,8 @@ export function PageEffects() {
       });
       targets.forEach((t) => {
         if (t.hasAttribute('data-reveal')) return;
+        // у шагов «Как мы работаем» своя анимация подсветки (opacity по data-on) — reveal её перебивал
+        if (t.matches('.pin-step, .pin-line')) return;
         const parent = t.parentElement;
         const idx = parent ? Array.from(parent.children).indexOf(t) : 0;
         t.style.transitionDelay = Math.min(idx, 6) * 90 + 'ms';

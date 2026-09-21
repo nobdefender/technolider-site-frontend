@@ -483,6 +483,7 @@ function easeScrollTo(top, duration = 1100) {
   requestAnimationFrame(step);
 }
 const instances = new Set();
+let lastBoot = 0;
 // одновременно живых WebGL-контекстов; на главной их шесть — иначе при прокрутке модели
 // в ещё видимых плитках засыпали и резко пропадали
 const MAX = 6;
@@ -555,7 +556,7 @@ class Tile3D extends HTMLElement {
     const live = [...instances].filter(i => i.renderer && i !== this).sort((a, b) => centerDist(b) - centerDist(a));
     const mine = centerDist(this);
     // усыпляем только те, что уже ушли с экрана; видимые не трогаем (иначе модель исчезает на глазах)
-    while (live.length >= MAX) { const far = live[0]; if (far.visible || centerDist(far) <= mine) return; far.sleep(); live.shift(); }
+    while (live.length >= MAX) { const far = live[0]; if (far.near || centerDist(far) <= mine) return; far.sleep(); live.shift(); }
     // холст появляется плавно: прозрачность растёт после первого отрисованного кадра
     const canvas = document.createElement('canvas'); canvas.style.cssText = 'width:100%;height:100%;display:block;opacity:0;transition:opacity .9s cubic-bezier(.2,.7,.2,1)'; this.appendChild(canvas);
     this._shown = false;
@@ -634,11 +635,18 @@ class Tile3D extends HTMLElement {
       this._vt = now + 160;
       const r = this.getBoundingClientRect();
       this.visible = r.width > 0 && r.bottom > -80 && r.top < innerHeight + 80;
+      // «рядом» — на экран ещё не попал, но скоро попадёт: сцену готовим заранее, пока плитка
+      // за кадром, чтобы создание WebGL-контекста не дёргало страницу в момент появления
+      this.near = r.width > 0 && r.bottom > -innerHeight * 0.75 && r.top < innerHeight * 1.75;
       if (this.mode === 'explode') this.measure();
-      if (!this.visible && this.renderer) this.sleep();
+      if (!this.near && this.renderer) this.sleep();
+    }
+    if (!this.renderer) {
+      // не больше одной инициализации за 120 мс — иначе несколько сцен, создаваемых в один кадр, дают рывок
+      if (this.near && !this._dead && now > (this._retry || 0) && now - lastBoot > 120) { this._retry = now + 300; lastBoot = now; this.boot(); }
+      return;
     }
     if (!this.visible) return;
-    if (!this.renderer) { if (!this._dead && now > (this._retry || 0)) { this._retry = now + 300; this.boot(); } return; }
     if (this.mode === 'explode') {
       if (this._auto) {
         // авто-режим: разобрать (0→1), пауза, собрать обратно (1→0), пауза — без резкого сброса
