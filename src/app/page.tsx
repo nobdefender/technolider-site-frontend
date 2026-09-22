@@ -132,7 +132,7 @@ export default function HomePage() {
       <section className="wrap sec-stats">
         <div className="sheet-head">
           <span className="tech tech-700">02 · Предприятие в цифрах</span>
-          <span className="tech">Лист 02 / 05 · Данные уточняются</span>
+          <span className="tech">Лист 02 / 05 · Показатели предприятия</span>
         </div>
         <div className="stats">
           <div className="stat">

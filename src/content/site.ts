@@ -89,7 +89,7 @@ export const routeLabels: Record<string, string> = {
   [routes.docs]: 'Документация',
   [routes.about]: 'О компании',
   [routes.contacts]: 'Контакты',
-  [routes.privacy]: 'Политика',
+  [routes.privacy]: 'Политика конфиденциальности',
 };
 
 /** Номер листа и подпись для шторки перехода (sectionLabel в макете). */

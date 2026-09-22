@@ -2,6 +2,8 @@
 
 import { useRef, useState, type ChangeEvent, type FocusEvent, type FormEvent } from 'react';
 import { Corners } from './Corners';
+import { TransitionLink } from './Transition';
+import { routes } from '@/content/site';
 import { sanitizeField, validateLead, type LeadErrors, type LeadFields } from '@/lib/lead';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
@@ -113,11 +115,19 @@ export function LeadForm() {
       </div>
       <div className="form-foot">
         <span className="form-note" role="status">
-          {status === 'sent'
-            ? 'Заявка отправлена. Ответим в рабочий день.'
-            : status === 'error'
-              ? 'Не удалось отправить. Позвоните нам или напишите на почту.'
-              : 'Отправляя заявку, вы соглашаетесь с политикой конфиденциальности.'}
+          {status === 'sent' ? (
+            'Заявка отправлена. Ответим в рабочий день.'
+          ) : status === 'error' ? (
+            'Не удалось отправить. Позвоните нам или напишите на почту.'
+          ) : (
+            <>
+              Отправляя заявку, вы соглашаетесь с{' '}
+              <TransitionLink href={routes.privacy} className="form-note-link">
+                политикой конфиденциальности
+              </TransitionLink>
+              .
+            </>
+          )}
         </span>
         <button
           type="submit"
