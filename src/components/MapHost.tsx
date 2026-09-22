@@ -3,11 +3,12 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { mapSrc, routes, site, ymapsApiKey } from '@/content/site';
+import styles from './MapHost.module.css';
 
 /**
  * Карта Яндекса живёт в корневом layout и не перезагружается при переходах между страницами:
  * она готовится заранее (скрытой), а на странице «Контакты» просто накладывается
- * на место блока `.map-wrap`. Поэтому карта готова сразу, без «промаргивания».
+ * на место блока карты ([data-map] на странице контактов). Поэтому карта готова сразу, без «промаргивания».
  *
  * Два режима:
  *  — JS API v3 (когда задан NEXT_PUBLIC_YMAPS_API_KEY): тёмная тема, своя метка, без рекламы;
@@ -29,7 +30,7 @@ export function MapHost() {
     return () => window.clearTimeout(t);
   }, [mounted, onContacts]);
 
-  // Совмещаем карту с блоком .map-wrap на странице контактов (координаты документа).
+  // Совмещаем карту с блоком [data-map] на странице контактов (координаты документа).
   useEffect(() => {
     const host = hostRef.current;
     if (!host) return;
@@ -41,7 +42,7 @@ export function MapHost() {
     let raf = 0;
     const sync = () => {
       raf = 0;
-      const anchor = document.querySelector<HTMLElement>('.map-wrap');
+      const anchor = document.querySelector<HTMLElement>('[data-map]');
       if (!anchor) return;
       const r = anchor.getBoundingClientRect();
       host.style.left = Math.round(r.left + window.scrollX) + 'px';
@@ -58,7 +59,7 @@ export function MapHost() {
     window.addEventListener('resize', schedule);
     const ro = new ResizeObserver(schedule);
     ro.observe(document.body);
-    const anchor = document.querySelector<HTMLElement>('.map-wrap');
+    const anchor = document.querySelector<HTMLElement>('[data-map]');
     if (anchor) ro.observe(anchor);
     return () => {
       if (raf) cancelAnimationFrame(raf);
@@ -101,7 +102,7 @@ export function MapHost() {
       map.addChild(new YMapDefaultFeaturesLayer({}));
 
       const pin = document.createElement('div');
-      pin.className = 'map-pin';
+      pin.className = styles.mapPin;
       pin.innerHTML = '<i></i><b></b>';
       map.addChild(new YMapMarker({ coordinates: center }, pin));
 
@@ -126,14 +127,14 @@ export function MapHost() {
   return (
     <div
       ref={hostRef}
-      className="map-host"
+      className={styles.mapHost}
       data-mode={useJsApi ? 'jsapi' : 'widget'}
       data-ready={ready ? '' : undefined}
       aria-hidden={!onContacts}
     >
       {mounted &&
         (useJsApi ? (
-          <div ref={mapRef} className="map-canvas" />
+          <div ref={mapRef} className={styles.mapCanvas} />
         ) : (
           <iframe title="Карта: Тула" src={mapSrc} onLoad={() => setReady(true)} allowFullScreen />
         ))}

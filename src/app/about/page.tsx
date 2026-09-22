@@ -5,6 +5,9 @@ import { TransitionLink } from '@/components/Transition';
 import { seo } from '@/content/seo';
 import { routes } from '@/content/site';
 import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from '@/lib/seo';
+import hero from '@/styles/hero.module.css';
+import shared from '@/styles/shared.module.css';
+import styles from './page.module.css';
 
 export const metadata = pageMetadata(seo.about);
 
@@ -45,21 +48,21 @@ export default function AboutPage() {
           ]),
         ]}
       />
-      <section className="hero-root">
-        <div className="hero-anim wrap hero-body">
+      <section className={hero.heroRoot} data-hero>
+        <div className={`${hero.heroAnim} wrap ${hero.heroBody}`}>
           <span className="kicker kicker--300 mb24">О компании</span>
-          <h1 className="h1-page">ООО НПП «Технолидер»</h1>
-          <p className="hero-sub">
+          <h1 className={hero.h1Page}>ООО НПП «Технолидер»</h1>
+          <p className={hero.heroSub}>
             Научно-производственное предприятие полного цикла в сфере радиоэлектроники и
             механо-сборочных работ.
           </p>
         </div>
       </section>
-      <div className="duotone photo-cell photo-wide">
+      <div className={`duotone ${shared.photoCell} ${shared.photoWide}`} data-photo>
         <ImageSlot id="v2-about-hero" placeholder="Широкое фото: производственный цех" />
       </div>
 
-      <section className="wrap sec-about-intro">
+      <section className={`wrap ${styles.secAboutIntro}`}>
         <h2 className="h2-sm">
           Объединяем инженерную мысль и современное промышленное оборудование
         </h2>
@@ -82,20 +85,20 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="wrap sec-comp">
+      <section className={`wrap ${styles.secComp}`}>
         <span className="kicker kicker--700 mb40">Ключевые компетенции</span>
-        <div className="comp-grid">
+        <div className={styles.compGrid}>
           {COMPETENCIES.map((c, i) => (
-            <div className="comp" key={i}>
-              <span className="comp-n">{String(i + 1).padStart(2, '0')}</span>
-              <p className="comp-p">{c}</p>
+            <div className={styles.comp} key={i}>
+              <span className={styles.compN}>{String(i + 1).padStart(2, '0')}</span>
+              <p className={styles.compP}>{c}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="sec-system">
-        <div className="wrap system-grid">
+      <section className={styles.secSystem}>
+        <div className={`wrap ${styles.systemGrid}`}>
           <div>
             <span className="kicker kicker--700 mb20">Наша система</span>
             <h2 className="h2-lg h2-fit mb24">В&nbsp;производстве нет места компромиссам</h2>
@@ -103,12 +106,12 @@ export default function AboutPage() {
               Понимаем, что в производстве нет места компромиссам. Поэтому выстроили систему.
             </p>
           </div>
-          <ol className="num-list">
+          <ol className={shared.numList}>
             {SYSTEM.map((s) => (
-              <li className="sys-item" key={s.n}>
-                <span className="sys-n">{s.n}</span>
+              <li className={styles.sysItem} key={s.n}>
+                <span className={styles.sysN}>{s.n}</span>
                 <div>
-                  <h3 className="sys-t">{s.t}</h3>
+                  <h3 className={styles.sysT}>{s.t}</h3>
                   <p className="p-muted mb0">{s.p}</p>
                 </div>
               </li>
@@ -117,25 +120,25 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="wrap sec-prod">
+      <section className={`wrap ${styles.secProd}`}>
         <span className="kicker kicker--700 mb24">Производство</span>
-        <div className="photo-grid">
-          <div className="duotone photo-cell photo-43">
+        <div className={shared.photoGrid}>
+          <div className={`duotone ${shared.photoCell} ${shared.photo43}`} data-photo>
             <ImageSlot id="v2-about-1" placeholder="Фото: станочный парк" />
           </div>
-          <div className="duotone photo-cell photo-43">
+          <div className={`duotone ${shared.photoCell} ${shared.photo43}`} data-photo>
             <ImageSlot id="v2-about-2" placeholder="Фото: монтажный участок" />
           </div>
-          <div className="duotone photo-cell photo-43">
+          <div className={`duotone ${shared.photoCell} ${shared.photo43}`} data-photo>
             <ImageSlot id="v2-about-3" placeholder="Фото: испытательное оборудование" />
           </div>
         </div>
-        <div className="about-close">
-          <p className="about-quote">
+        <div className={styles.aboutClose}>
+          <p className={styles.aboutQuote} data-fit>
             Наше предприятие создано для решения нестандартных задач. Если ваше изделие требует
             высокой точности и надежности — готовы стать вашим технологическим партнером.
           </p>
-          <div className="about-close-actions">
+          <div className={styles.aboutCloseActions}>
             <TransitionLink href={routes.contacts} className="btn btn-primary blueprint btn-cta2">
               Связаться с нами
               <Corners />

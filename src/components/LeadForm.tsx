@@ -5,6 +5,7 @@ import { Corners } from './Corners';
 import { TransitionLink } from './Transition';
 import { routes } from '@/content/site';
 import { sanitizeField, validateLead, type LeadErrors, type LeadFields } from '@/lib/lead';
+import styles from './LeadForm.module.css';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
@@ -75,13 +76,13 @@ export function LeadForm() {
 
   const err = (name: keyof LeadFields) =>
     errors[name] ? (
-      <span className="field-error" id={`lead-${name}-error`} role="alert">
+      <span className={styles.fieldError} id={`lead-${name}-error`} role="alert">
         {errors[name]}
       </span>
     ) : null;
 
   return (
-    <form className="lead-form" onSubmit={submit} noValidate ref={formRef}>
+    <form className={styles.leadForm} onSubmit={submit} noValidate ref={formRef}>
       <div className="field">
         <label htmlFor="lead-name">Как вас зовут</label>
         <input id="lead-name" className="input" type="text" placeholder="Имя" autoComplete="name" {...field('name')} />
@@ -92,29 +93,29 @@ export function LeadForm() {
         <input id="lead-phone" className="input" type="tel" placeholder="+7 ___ ___-__-__" autoComplete="tel" inputMode="tel" maxLength={16} {...field('phone')} />
         {err('phone')}
       </div>
-      <div className="field span-all">
+      <div className={`field ${styles.spanAll}`}>
         <label htmlFor="lead-email">Электронная почта</label>
         <input id="lead-email" className="input" type="email" placeholder="name@company.ru" autoComplete="email" {...field('email')} />
         {err('email')}
       </div>
-      <div className="field span-all">
+      <div className={`field ${styles.spanAll}`}>
         <label htmlFor="lead-task">Задача</label>
         <textarea id="lead-task" className="input" placeholder="Что нужно изготовить или разработать" {...field('task')} />
         {err('task')}
       </div>
-      <div className="blueprint captcha">
+      <div className={`blueprint ${styles.captcha}`}>
         <Corners />
-        <label className="captcha-label">
+        <label className={styles.captchaLabel}>
           <input type="checkbox" checked={captchaOk} onChange={(e) => setCaptchaOk(e.target.checked)} />
           Я не робот
         </label>
-        <span className="captcha-brand">
-          <span className="captcha-name">SmartCaptcha</span>
-          <span className="captcha-sub">Yandex Cloud</span>
+        <span className={styles.captchaBrand}>
+          <span className={styles.captchaName}>SmartCaptcha</span>
+          <span className={styles.captchaSub}>Yandex Cloud</span>
         </span>
       </div>
-      <div className="form-foot">
-        <span className="form-note" role="status">
+      <div className={styles.formFoot}>
+        <span className={styles.formNote} role="status">
           {status === 'sent' ? (
             'Заявка отправлена. Ответим в рабочий день.'
           ) : status === 'error' ? (
@@ -122,7 +123,7 @@ export function LeadForm() {
           ) : (
             <>
               Отправляя заявку, вы соглашаетесь с{' '}
-              <TransitionLink href={routes.privacy} className="form-note-link">
+              <TransitionLink href={routes.privacy} className={styles.formNoteLink}>
                 политикой конфиденциальности
               </TransitionLink>
               .
@@ -131,7 +132,7 @@ export function LeadForm() {
         </span>
         <button
           type="submit"
-          className="btn btn-primary blueprint submit-btn"
+          className={`btn btn-primary blueprint ${styles.submitBtn}`}
           data-armed={captchaOk ? '' : undefined}
           disabled={!captchaOk || status === 'sending'}
         >

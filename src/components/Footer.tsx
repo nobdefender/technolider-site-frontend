@@ -1,65 +1,66 @@
 import { requisitesText, routes, site } from '@/content/site';
 import { CopyButton } from './CopyButton';
 import { TransitionLink } from './Transition';
+import styles from './Footer.module.css';
 
 export function Footer() {
   return (
-    <footer className="footer">
-      <div className="wrap footer-grid">
+    <footer className={styles.footer}>
+      <div className={`wrap ${styles.footerGrid}`}>
         <div>
-          <span className="footer-brand">Технолидер</span>
-          <p className="footer-desc">
+          <span className={styles.footerBrand}>Технолидер</span>
+          <p className={styles.footerDesc}>
             Научно-производственное предприятие полного цикла в сфере радиоэлектроники и
             механо-сборочных работ.
           </p>
         </div>
-        <nav className="footer-col" aria-label="Услуги">
-          <span className="footer-h">Услуги</span>
-          <TransitionLink href={routes.antennas} className="footer-link">
+        <nav className={styles.footerCol} aria-label="Услуги">
+          <span className={styles.footerH}>Услуги</span>
+          <TransitionLink href={routes.antennas} className={styles.footerLink}>
             Антенны
           </TransitionLink>
-          <TransitionLink href={routes.metal} className="footer-link">
+          <TransitionLink href={routes.metal} className={styles.footerLink}>
             Металлообработка
           </TransitionLink>
-          <TransitionLink href={routes.assembly} className="footer-link">
+          <TransitionLink href={routes.assembly} className={styles.footerLink}>
             Контрактная сборка
           </TransitionLink>
-          <TransitionLink href={routes.docs} className="footer-link">
+          <TransitionLink href={routes.docs} className={styles.footerLink}>
             Документация КД, ТД
           </TransitionLink>
         </nav>
-        <nav className="footer-col" aria-label="Компания">
-          <span className="footer-h">Компания</span>
-          <TransitionLink href={routes.about} className="footer-link">
+        <nav className={styles.footerCol} aria-label="Компания">
+          <span className={styles.footerH}>Компания</span>
+          <TransitionLink href={routes.about} className={styles.footerLink}>
             О компании
           </TransitionLink>
-          <TransitionLink href={routes.services} className="footer-link">
+          <TransitionLink href={routes.services} className={styles.footerLink}>
             Услуги
           </TransitionLink>
-          <TransitionLink href={routes.contacts} className="footer-link">
+          <TransitionLink href={routes.contacts} className={styles.footerLink}>
             Контакты
           </TransitionLink>
         </nav>
-        <address className="footer-col">
-          <span className="footer-h">Связаться</span>
-          <a href={site.phoneHref} className="footer-phone">
+        <address className={styles.footerCol}>
+          <span className={styles.footerH}>Связаться</span>
+          <a href={site.phoneHref} className={styles.footerPhone}>
             {site.phone}
           </a>
-          <a href={`mailto:${site.email}`} className="footer-mail">
+          <a href={`mailto:${site.email}`} className={styles.footerMail}>
             {site.email}
           </a>
-          <span className="footer-addr">{site.address}</span>
-          <span className="footer-hours">{site.hours}</span>
+          <span className={styles.footerAddr}>{site.address}</span>
+          <span className={styles.footerHours}>{site.hours}</span>
         </address>
       </div>
-      <div className="wrap footer-bottom">
+      <div className={`wrap ${styles.footerBottom}`}>
         <span className="tech tech-500">
           © {site.legalShort}, {site.year}
         </span>
         <CopyButton text={requisitesText} title="Скопировать реквизиты" className="tech tech-500">
           ИНН&nbsp;{site.inn} · КПП&nbsp;{site.kpp} · ОГРН&nbsp;{site.ogrn}
         </CopyButton>
-        <TransitionLink href={routes.privacy} className="tech footer-privacy">
+        <TransitionLink href={routes.privacy} className={`tech ${styles.footerPrivacy}`}>
           Политика конфиденциальности
         </TransitionLink>
       </div>

@@ -1,0 +1,74 @@
+/* Шапка: фиксированная навигация, бренд, бургер-меню, полоса прогресса прокрутки. */
+.nav {
+  display: flex; align-items: center; gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: none;
+}
+.navBrand {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 18px; margin-right: auto;
+}
+.nav a { color: inherit; text-decoration: none; font-size: 14px; }
+.nav a:hover, .nav a[aria-current='page'] { color: var(--color-accent); }
+
+.navBrand, .navBrand span { font-family: var(--font-heading); }
+.nav a { color: var(--color-bg); font-size:13px; letter-spacing:0.1em; text-transform:uppercase; font-weight:500; }
+.nav a:hover, .nav a[aria-current='page'] { color: var(--color-accent-300); }
+.nav a:not(.navBrand):not(:global(.btn)) { position:relative; padding:4px 0; }
+.nav a:not(.navBrand):not(:global(.btn))::after { content:""; position:absolute; left:0; right:0; bottom:-2px; height:1px; background:var(--color-accent-300); transform:scaleX(0); transform-origin:left; transition:transform .45s cubic-bezier(.2,.7,.2,1); }
+.nav a:not(.navBrand):not(:global(.btn)):hover::after, .nav a[aria-current='page']::after { transform:scaleX(1); }
+.navSpacer { height:var(--nav-h,86px); flex:0 0 auto; }
+.progress { position:absolute; left:0; right:0; bottom:-1px; height:1px; background:var(--color-accent-800); }
+.progress i { display:block; height:100%; background:var(--color-accent-300); transform-origin:left; }
+
+.nav.siteNav { position:fixed; left:0; right:0; top:0; z-index:20; background:var(--color-accent-900); color:var(--color-bg); padding:0 var(--px); min-height:72px; flex-wrap:wrap; gap:8px 28px; border-bottom:1px solid var(--color-accent-800); }
+.nav a.navBrand { display:flex; flex-direction:column; line-height:1; text-decoration:none; margin-right:auto; color:var(--color-bg); letter-spacing:0; text-transform:none; }
+.navBrandName { font-size:24px; letter-spacing:0.08em; text-transform:uppercase; }
+.navBrandSub { font-family:var(--font-body); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-accent-300); margin-top:5px; font-weight:400; }
+.nav a.navPhone { font-family:var(--font-heading); font-weight:600; font-size:19px; letter-spacing:0.03em; text-transform:none; }
+.nav a.navCta { border-color:var(--color-accent-300); color:var(--color-bg); text-transform:uppercase; letter-spacing:0.1em; font-size:13px; padding:10px 20px; }
+.nav a.navCta:hover { background:var(--color-accent-800); color:var(--color-bg); }
+.nav a.navCta > :global(.corner) { color:var(--color-accent-300); }
+
+/* кнопка-бургер — без нативной стилизации iOS */
+.navBurger { -webkit-appearance: none; appearance: none; }
+
+/* — на десктопе (> 1100px) пункты меню лежат в общем flex, бургер скрыт;
+     на планшетах и телефонах — бургер (иначе пункты и кнопка не помещаются в одну строку) — */
+.navBurger { display:none; }
+@media (min-width:1101px) {
+  .navMenu { display:contents; }
+}
+@media (max-width:1100px) {
+  .nav.siteNav { flex-wrap:nowrap; gap:16px; }
+  .navBurger { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; margin:0 -11px 0 0; background:none; border:0; padding:0; color:var(--color-bg); cursor:pointer; }
+  .navBurger:focus-visible { outline:2px solid var(--color-accent); outline-offset:4px; }
+  .navBurgerIcon { position:relative; display:block; width:22px; height:15px; }
+  .navBurgerIcon i { position:absolute; left:0; right:0; height:1px; background:var(--color-accent-300); transition:transform .35s cubic-bezier(.2,.7,.2,1), top .35s cubic-bezier(.2,.7,.2,1), opacity .25s; }
+  .navBurgerIcon i:nth-child(1) { top:0; }
+  .navBurgerIcon i:nth-child(2) { top:7px; }
+  .navBurgerIcon i:nth-child(3) { top:14px; }
+  .nav[data-open] .navBurgerIcon i:nth-child(1) { top:7px; transform:rotate(45deg); }
+  .nav[data-open] .navBurgerIcon i:nth-child(2) { opacity:0; }
+  .nav[data-open] .navBurgerIcon i:nth-child(3) { top:7px; transform:rotate(-45deg); }
+  .navMenu { position:fixed; left:0; right:0; top:var(--nav-h,72px); bottom:0; z-index:19; background:var(--color-accent-900); border-top:1px solid var(--color-accent-800); padding:16px var(--px) 32px; display:flex; flex-direction:column; align-items:stretch; overflow-y:auto; opacity:0; visibility:hidden; transform:translateY(-8px); transition:opacity .3s, transform .35s cubic-bezier(.2,.7,.2,1), visibility 0s .35s; }
+  .nav[data-open] .navMenu { opacity:1; visibility:visible; transform:none; transition:opacity .3s, transform .35s cubic-bezier(.2,.7,.2,1); }
+  .nav .navMenu > a:not(:global(.btn)) { font-size:17px; padding:18px 0; border-bottom:1px solid var(--color-accent-800); }
+  .nav .navMenu > a:not(:global(.btn))::after { display:none; }
+  .nav .navMenu > a.navPhone { font-size:26px; padding:22px 0; }
+  .nav .navMenu > a.navCta { margin-top:28px; align-self:flex-start; padding:14px 24px; font-size:14px; }
+}
+
+/* — узкие телефоны — */
+@media (max-width:480px) {
+  .navBrandSub { font-size:9px; letter-spacing:0.1em; white-space:nowrap; }
+  .nav a.navBrand { min-width:0; }
+  .navBurger { flex:none; }
+}
+
+/* — очень узкие экраны (320px) — */
+@media (max-width:380px) {
+  .navBrandName { font-size:22px; }
+  .navBrandSub { font-size:8.5px; }
+  .nav.siteNav { gap:12px; }
+}

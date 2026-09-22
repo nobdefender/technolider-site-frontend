@@ -5,19 +5,21 @@ import { TransitionLink } from '@/components/Transition';
 import { seo } from '@/content/seo';
 import { routes } from '@/content/site';
 import { pageMetadata } from '@/lib/seo';
+import hero from '@/styles/hero.module.css';
+import styles from './page.module.css';
 
 export const metadata = pageMetadata(seo.privacy);
 
 function P({ children }: { children: ReactNode }) {
-  return <p className="pp-p">{children}</p>;
+  return <p className={styles.ppP}>{children}</p>;
 }
 
 function List({ items }: { items: ReactNode[] }) {
   return (
-    <ul className="pp-list">
+    <ul className={styles.ppList}>
       {items.map((it, i) => (
-        <li className="pp-li" key={i}>
-          <span className="pp-dash">—</span>
+        <li className={styles.ppLi} key={i}>
+          <span className={styles.ppDash}>—</span>
           <span>{it}</span>
         </li>
       ))}
@@ -224,15 +226,15 @@ const SECTIONS: { id: string; n: string; t: string; body: ReactNode }[] = [
 export default function PrivacyPage() {
   return (
     <main data-screen-label="Политика конфиденциальности">
-      <section className="hero-root">
-        <div className="hero-anim wrap hero-body">
+      <section className={hero.heroRoot} data-hero>
+        <div className={`${hero.heroAnim} wrap ${hero.heroBody}`}>
           <span className="kicker kicker--300 mb24">Документ</span>
-          <h1 className="h1-doc">Политика конфиденциальности</h1>
-          <p className="hero-sub">
+          <h1 className={hero.h1Doc}>Политика конфиденциальности</h1>
+          <p className={hero.heroSub}>
             Как ООО НПП «Технолидер» обрабатывает персональные данные посетителей сайта в
             соответствии с Федеральным законом № 152-ФЗ «О персональных данных».
           </p>
-          <div className="doc-meta">
+          <div className={hero.docMeta}>
             <span className="tech tech-300">Редакция 01</span>
             <span className="tech tech-300">Действует с 01.09.2026</span>
             <span className="tech tech-300">Оператор: ООО НПП «Технолидер», г. Тула</span>
@@ -240,20 +242,20 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <section className="wrap pp-grid">
+      <section className={`wrap ${styles.ppGrid}`}>
         <PrivacyToc items={SECTIONS.map(({ id, n, t }) => ({ id, n, t }))} />
         <div>
           {SECTIONS.map((s) => (
-            <section id={s.id} data-pp className="pp-sec" key={s.id}>
+            <section id={s.id} data-pp className={styles.ppSec} key={s.id}>
               <div className="sheet-head">
                 <span className="tech tech-700">{s.n}</span>
                 <span className="tech">Лист {s.n} / 09</span>
               </div>
-              <h2 className="pp-h2">{s.t}</h2>
+              <h2 className={styles.ppH2}>{s.t}</h2>
               {s.body}
             </section>
           ))}
-          <div className="pp-foot">
+          <div className={styles.ppFoot}>
             <span className="tech">Редакция 01 · 01.09.2026</span>
             <TransitionLink href={routes.contacts} className="btn btn-primary blueprint btn-cta2">
               Задать вопрос

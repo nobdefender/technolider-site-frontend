@@ -512,7 +512,7 @@ class Tile3D extends HTMLElement {
         if (!host || !host.contains(this)) return;
         this.host = host;
         const list = Array.from(host.querySelectorAll('[data-ex-step]'));
-        const stage = host.querySelector('.ex-stage');
+        const stage = host.querySelector('[data-ex-stage]');
         const i = list.indexOf(s); if (i < 0) return;
         this.steps = list; this._act = -1;
         const t = (i + 0.5) / list.length;
@@ -522,7 +522,7 @@ class Tile3D extends HTMLElement {
           this._auto = false; this.tp = t; this._at = t; this._hold = performance.now() + 6000;
           // если сцена не видна (список ниже экрана) — подводим под шапку заголовок сцены («Разнесённый вид · …»)
           const cr = this.getBoundingClientRect(), navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
-          const head = host.querySelector('.ex-grid .sheet-head') || this;
+          const head = host.querySelector('[data-ex-head]') || this;
           if (cr.top < navH || cr.bottom > innerHeight) easeScrollTo(head.getBoundingClientRect().top + scrollY - navH - 24);
           return;
         }
@@ -541,7 +541,7 @@ class Tile3D extends HTMLElement {
       this.tPanX = 0; this.panX = 0; this.scrollY = window.scrollY || 0;
       this.tScale = 1; this.scale = 0.001;
     } else {
-      const host = this.closest('.tile') || this.parentElement;
+      const host = this.closest('[data-tile]') || this.parentElement;
       host.addEventListener('pointerenter', () => { this.targetSpeed = this.mo.speed * 1.8 * this.mo.dir; this.tScale = 1.06; this.tLight = 1; });
       host.addEventListener('pointerleave', () => { this.targetSpeed = this.mo.speed * this.mo.dir; this.tScale = 1; this.tTiltX = 0; this.tTiltZ = 0; this.tLight = 0; });
       host.addEventListener('pointermove', (e) => { const r = host.getBoundingClientRect(); const nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5; this.tTiltX = ny * 0.5; this.tTiltZ = -nx * 0.35; });
@@ -590,7 +590,7 @@ class Tile3D extends HTMLElement {
   measure() {
     if (!this.host || !this.host.isConnected) { this.host = this.closest('[data-explode]'); this.steps = this.host ? Array.from(this.host.querySelectorAll('[data-ex-step]')) : []; this._act = -1; }
     if (!this.host) return;
-    const stage = this.host.querySelector('.ex-stage');
+    const stage = this.host.querySelector('[data-ex-stage]');
     const pinned = !!stage && getComputedStyle(stage).position === 'sticky';
     if (!pinned && this._hold && performance.now() < this._hold) return;
     if (!pinned) { if (AUTO[this.kind]) { this._auto = true; } else { this._auto = false; this.tp = 0; } return; }

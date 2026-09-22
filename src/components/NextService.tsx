@@ -1,6 +1,7 @@
 import { routes, site } from '@/content/site';
 import { Corners } from './Corners';
 import { TransitionLink } from './Transition';
+import styles from './NextService.module.css';
 
 type Props = {
   num: string;
@@ -12,23 +13,23 @@ type Props = {
 /** Блок «Следующая услуга» в конце страницы услуги. */
 export function NextService({ num, of, href, title }: Props) {
   return (
-    <section data-dark className="next-sec">
+    <section data-dark className={styles.nextSec}>
       <div className="wrap">
         <div className="sheet-head mb0">
           <span className="tech tech-300">Следующая услуга</span>
           <span className="tech">{of}</span>
         </div>
-        <TransitionLink href={href} className="next-link">
-          <span className="next-num">{num}</span>
-          <h2 className="next-title">{title}</h2>
-          <span className="next-arrow">→</span>
+        <TransitionLink href={href} className={styles.nextLink}>
+          <span className={styles.nextNum}>{num}</span>
+          <h2 className={styles.nextTitle}>{title}</h2>
+          <span className={styles.nextArrow}>→</span>
         </TransitionLink>
-        <div className="next-foot">
-          <span className="next-note">
+        <div className={styles.nextFoot}>
+          <span className={styles.nextNote}>
             Пришлите чертёж, спецификацию или образец — оценим сроки и стоимость.
           </span>
-          <div className="next-actions">
-            <a href={site.phoneHref} className="next-phone">
+          <div className={styles.nextActions}>
+            <a href={site.phoneHref} className={styles.nextPhone}>
               {site.phone}
             </a>
             <TransitionLink href={routes.contacts} className="btn btn-primary blueprint btn-cta2">

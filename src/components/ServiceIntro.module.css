@@ -1,0 +1,19 @@
+/* Страница услуги: описание + нумерованный список возможностей. Первый экран — styles/hero.module.css. */
+.secIntro { padding-top:96px; padding-bottom:120px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:56px clamp(32px,6vw,120px); align-items:start; }
+.introLead { margin:0 0 40px; font-size:clamp(22px,2.2vw,32px); line-height:1.32; }
+.numItem { display:grid; grid-template-columns:56px 1fr; gap:16px; padding:22px 0; border-bottom:1px solid var(--color-divider); }
+.numN { font-family:var(--font-heading); font-weight:600; font-size:16px; letter-spacing:0.1em; color:var(--color-accent-700); padding-top:3px; }
+
+/* WebKit: элементы сетки не растягивают колонку своим min-content */
+.secIntro > * { min-width:0; }
+
+@media (max-width:900px) {
+  /* двухколоночная сетка — в одну колонку (minmax(320px) даёт слишком узкие колонки) */
+  .secIntro { grid-template-columns:minmax(0,1fr); }
+}
+
+@media (max-width:600px) {
+  .secIntro { padding-top:56px; padding-bottom:56px; gap:36px; }
+  .introLead { font-size:22px; margin-bottom:28px; }
+  .numItem { grid-template-columns:44px 1fr; }
+}

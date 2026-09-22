@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import { imageAlts, imagePositions, images, type ImageSlotId } from '@/content/images';
+import styles from './ImageSlot.module.css';
 
 type Props = {
   id: ImageSlotId;
@@ -17,12 +18,12 @@ export function ImageSlot({ id, placeholder, className, style }: Props) {
   const position = imagePositions[id];
   return (
     <div
-      className={['image-slot', className].filter(Boolean).join(' ')}
+      className={[styles.imageSlot, className].filter(Boolean).join(' ')}
       data-slot={id}
       data-filled={src ? '' : undefined}
       style={style}
     >
-      <div className="image-slot-frame">
+      <div className={styles.imageSlotFrame}>
         {src ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -34,7 +35,7 @@ export function ImageSlot({ id, placeholder, className, style }: Props) {
             style={position ? { objectPosition: position } : undefined}
           />
         ) : (
-          <div className="image-slot-empty" aria-hidden="true">
+          <div className={styles.imageSlotEmpty} aria-hidden="true">
             <svg
               width="28"
               height="28"
@@ -49,11 +50,11 @@ export function ImageSlot({ id, placeholder, className, style }: Props) {
               <circle cx="8.5" cy="8.5" r="1.5" />
               <path d="m21 15-5-5L5 21" />
             </svg>
-            <div className="cap">{placeholder}</div>
+            <div className={styles.cap}>{placeholder}</div>
           </div>
         )}
       </div>
-      <span className="image-slot-ring" />
+      <span className={styles.imageSlotRing} />
     </div>
   );
 }

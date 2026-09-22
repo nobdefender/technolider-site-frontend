@@ -1,0 +1,28 @@
+/* Шторка перехода между страницами. Сетка, рамка, штамп — из Preloader.module.css. */
+@keyframes rise { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:none; } }
+@keyframes curtainIn { from { transform:translateY(101%) } to { transform:translateY(0) } }
+@keyframes curtainOut { from { transform:translateY(0) } to { transform:translateY(-101%) } }
+@keyframes wipe { to { clip-path:inset(0 0 0 0) } }
+@keyframes fillbar { from { transform:scaleX(0) } to { transform:scaleX(1) } }
+
+.curtain { position:fixed; inset:0; z-index:1000; background:var(--color-accent-900); transform:translateY(101%); pointer-events:none; overflow:hidden; color:var(--color-bg); }
+.curtain[data-in] { animation: curtainIn .55s cubic-bezier(.7,0,.2,1) forwards; }
+.curtain[data-out] { animation: curtainOut .6s cubic-bezier(.7,0,.2,1) forwards; }
+.curtainInner { position:absolute; inset:0; }
+/* сетка в шторке появляется быстрее, чем в прелоадере */
+.curtain .curtainGrid { animation-duration:.9s; }
+.curtainBody { position:absolute; left:clamp(32px,6vw,96px); right:clamp(32px,6vw,96px); top:50%; transform:translateY(-50%); }
+.curtainKicker { display:block; font-family:var(--font-body); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-accent-300); margin-bottom:18px; animation: rise .5s cubic-bezier(.2,.7,.2,1) .2s both; }
+.curtainLabel { text-wrap:balance; overflow-wrap:normal; display:block; font-family:var(--font-heading); font-weight:600; font-size:min(clamp(40px,7.5vw,128px), calc((100vw - 2 * clamp(32px,6vw,96px)) / 13.4)); line-height:.9; letter-spacing:0.03em; text-transform:uppercase; color:var(--color-bg); clip-path:inset(0 100% 0 0); animation: wipe .7s cubic-bezier(.7,0,.2,1) .25s forwards; }
+.curtainSub { display:block; margin-top:20px; font-size:15px; letter-spacing:0.08em; text-transform:uppercase; color:var(--color-accent-200); animation: rise .6s cubic-bezier(.2,.7,.2,1) .4s both; }
+.curtainBar { height:1px; background:var(--color-accent-700); margin-top:40px; position:relative; }
+.curtainBar i { position:absolute; inset:0; background:var(--color-accent-300); transform-origin:left; animation: fillbar .8s cubic-bezier(.4,0,.2,1) .35s both; }
+.curtainBar b { position:absolute; top:-4px; width:1px; height:9px; background:var(--color-accent-300); }
+.curtainBar b:first-of-type { left:0 } .curtainBar b:last-of-type { right:0 }
+.curtainMeta { display:flex; justify-content:space-between; align-items:baseline; margin-top:14px; font-family:var(--font-body); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-accent-300); font-variant-numeric:tabular-nums; animation: rise .6s cubic-bezier(.2,.7,.2,1) .45s both; }
+
+@media (prefers-reduced-motion: reduce) { .curtain { display:none } }
+
+@media (max-width:480px) {
+  .curtainLabel { font-size:clamp(26px,7vw,64px); }
+}

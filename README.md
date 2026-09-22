@@ -21,10 +21,13 @@ src/app/                 маршруты
   page.tsx               главная
   services/              услуги (+ antennas, metal, assembly, docs)
   about/  contacts/  privacy/
-  api/lead/route.ts      приём заявки с формы
   api/health/route.ts    проверка живости (Docker healthcheck)
-  globals.css            дизайн-система «Industry» + стили макета
+  globals.css            дизайн-система «Industry»: токены, базовые элементы, общие
+                         примитивы (.btn, .blueprint, .tech, .wrap…) и утилиты
+  **/page.module.css     стили конкретной страницы (CSS-модули)
+src/styles/              общие CSS-модули: hero (первые экраны), shared (фото, списки)
 src/components/          шапка, подвал, шторка переходов, прелоадер, 3D, форма…
+                         (стили каждого компонента — рядом, в *.module.css)
 src/lib/tiles3d.js       кастомный элемент <tile-3d> (three.js) из макета
 src/content/site.ts      контакты, реквизиты, карта, настройки (телефон в шапке,
                          раскладка плиток, фоновое видео)
@@ -37,11 +40,14 @@ src/content/images.ts    фотографии для слотов макета
    Положите файлы в `public/photos/` и пропишите пути в `src/content/images.ts`,
    например `'v2-about-1': '/photos/shop.jpg'`. Главный экран — без фото/видео,
    только градиент и 3D-модель.
-2. **Форма заявки.** Правила проверки полей — в `src/lib/lead.ts` (общие для клиента и сервера). `src/app/api/lead/route.ts` сейчас только валидирует данные
-   и пишет их в лог сервера. Подключите отправку на почту (nodemailer/SMTP) или
-   в CRM.
-3. **Капча.** Блок «Я не робот · SmartCaptcha» в макете — визуальная заглушка
-   (обычный чекбокс). Для реальной защиты подключите Yandex SmartCaptcha.
+2. **Бэкенд.** Форма отправляет `POST /api/leads` (multipart: поля + до 3 файлов
+   по 5 МБ) в отдельный сервис — репозиторий `technolider-site-backend`. Адрес задаётся
+   `NEXT_PUBLIC_API_URL`: пусто — тот же домен (nginx проксирует `/api/` на бэкенд),
+   для локальной разработки — `http://localhost:4000`. Правила проверки полей —
+   в `src/lib/lead.ts`.
+3. **Капча.** Клиентский ключ Yandex SmartCaptcha — `NEXT_PUBLIC_SMARTCAPTCHA_KEY`
+   (серверный живёт в `.env` бэкенда). Пусто — вместо виджета обычный чекбокс
+   «Я не робот», годится только для стенда.
 4. **Адрес сайта и счётчики.** Скопируйте `.env.example` в `.env` и укажите
    `NEXT_PUBLIC_SITE_URL` (нужен для canonical, Open Graph, `sitemap.xml`,
    `robots.txt`, `llms.txt`), номер счётчика Яндекс Метрики `NEXT_PUBLIC_YM_ID`

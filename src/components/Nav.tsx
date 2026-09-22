@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { routes, site } from '@/content/site';
 import { Corners } from './Corners';
 import { TransitionLink } from './Transition';
+import styles from './Nav.module.css';
 
 export function Nav() {
   const pathname = usePathname();
@@ -78,29 +79,29 @@ export function Nav() {
     <>
       <nav
         ref={navRef}
-        className="nav site-nav"
+        className={`${styles.nav} ${styles.siteNav}`}
         aria-label="Основная навигация"
         data-open={open ? '' : undefined}
       >
-        <TransitionLink href={routes.home} className="nav-brand" onClick={close}>
-          <span className="nav-brand-name">Технолидер</span>
-          <span className="nav-brand-sub">Научно-производственное предприятие</span>
+        <TransitionLink href={routes.home} className={styles.navBrand} onClick={close}>
+          <span className={styles.navBrandName}>Технолидер</span>
+          <span className={styles.navBrandSub}>Научно-производственное предприятие</span>
         </TransitionLink>
         <button
           type="button"
-          className="nav-burger"
+          className={styles.navBurger}
           aria-expanded={open}
           aria-controls="site-menu"
           aria-label={open ? 'Закрыть меню' : 'Открыть меню'}
           onClick={() => setOpen((v) => !v)}
         >
-          <span className="nav-burger-icon" aria-hidden="true">
+          <span className={styles.navBurgerIcon} aria-hidden="true">
             <i />
             <i />
             <i />
           </span>
         </button>
-        <div className="nav-menu" id="site-menu">
+        <div className={styles.navMenu} id="site-menu">
           <TransitionLink href={routes.services} aria-current={curServices} onClick={close}>
             Услуги
           </TransitionLink>
@@ -111,20 +112,20 @@ export function Nav() {
             Контакты
           </TransitionLink>
           {site.showPhone && (
-            <a href={site.phoneHref} className="nav-phone">
+            <a href={site.phoneHref} className={styles.navPhone}>
               {site.phone}
             </a>
           )}
-          <TransitionLink href={routes.contacts} className="btn blueprint nav-cta" onClick={close}>
+          <TransitionLink href={routes.contacts} className={`btn blueprint ${styles.navCta}`} onClick={close}>
             Связаться с нами
             <Corners />
           </TransitionLink>
         </div>
-        <span className="progress">
+        <span className={styles.progress}>
           <i ref={progRef} style={{ transform: 'scaleX(0)' }} />
         </span>
       </nav>
-      <div className="nav-spacer" ref={spacerRef} aria-hidden="true" />
+      <div className={styles.navSpacer} ref={spacerRef} aria-hidden="true" />
     </>
   );
 }

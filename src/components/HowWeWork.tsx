@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { workSteps } from '@/content/site';
+import styles from './HowWeWork.module.css';
 
 const STEPS = workSteps;
 
@@ -43,7 +44,7 @@ export function HowWeWork() {
         // без закрепления (планшет/телефон): шаг подсвечивается, когда доходит до 66% высоты экрана
         const line = window.innerHeight * 0.66;
         let n = 0;
-        el.querySelectorAll('.pin-step').forEach((st) => {
+        el.querySelectorAll('[data-step]').forEach((st) => {
           if (st.getBoundingClientRect().top < line) n++;
         });
         const i = Math.min(5, Math.max(1, n));
@@ -60,7 +61,7 @@ export function HowWeWork() {
 
   const pinGo = (e: MouseEvent<HTMLDivElement>) => {
     const t = e.currentTarget;
-    const el = t.closest('.pin-wrap') || pinRef.current;
+    const el = pinRef.current;
     const i = +(t.getAttribute('data-step') || 1);
     if (!el || window.innerWidth <= 1100) {
       // без закреплённой прокрутки подводим выбранный шаг к линии подсветки
@@ -75,40 +76,40 @@ export function HowWeWork() {
   };
 
   return (
-    <section className="sec-how" data-dark>
-      <div className="wrap how-inner">
-        <div className="pin-wrap" ref={pinRef}>
-          <div className="pin-stage">
+    <section className={styles.secHow} data-dark>
+      <div className={`wrap ${styles.howInner}`}>
+        <div className={styles.pinWrap} ref={pinRef}>
+          <div className={styles.pinStage}>
             <div className="sheet-head">
               <span className="tech tech-700">04 · Как мы работаем</span>
               <span className="tech">Лист 04 / 05 · Маршрутная карта</span>
             </div>
-            <div className="how-head">
-              <h2 className="h2-lg how-title">
+            <div className={styles.howHead}>
+              <h2 className={`h2-lg ${styles.howTitle}`}>
                 Пять шагов
                 <br />
                 от заявки
                 <br />
                 до готового изделия
               </h2>
-              <span className="tech how-counter">
+              <span className={`tech ${styles.howCounter}`}>
                 {String(idx).padStart(2, '0')}
-                <span className="how-total"> / 05</span>
+                <span className={styles.howTotal}> / 05</span>
               </span>
             </div>
-            <div className="steps" data-steps>
-              <i className="pin-line" style={{ width: idx * 20 + '%' }} />
+            <div className={styles.steps} data-steps>
+              <i className={styles.pinLine} data-pin-line style={{ width: idx * 20 + '%' }} />
               {STEPS.map((s, i) => (
                 <div
                   key={s.n}
-                  className="step pin-step"
+                  className={`${styles.step} ${styles.pinStep}`}
                   data-on={idx >= i + 1 ? '' : undefined}
                   data-step={i + 1}
                   onClick={pinGo}
                 >
-                  <span className="step-n">{s.n}</span>
-                  <h3 className="step-t">{s.t}</h3>
-                  <p className="step-p">{s.p}</p>
+                  <span className={styles.stepN}>{s.n}</span>
+                  <h3 className={styles.stepT}>{s.t}</h3>
+                  <p className={styles.stepP}>{s.p}</p>
                 </div>
               ))}
             </div>

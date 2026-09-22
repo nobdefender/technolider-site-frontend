@@ -3,6 +3,9 @@ import { TransitionLink } from '@/components/Transition';
 import { seo } from '@/content/seo';
 import { routes } from '@/content/site';
 import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from '@/lib/seo';
+import hero from '@/styles/hero.module.css';
+import shared from '@/styles/shared.module.css';
+import styles from './page.module.css';
 
 export const metadata = pageMetadata(seo.services);
 
@@ -49,31 +52,31 @@ export default function ServicesPage() {
           ]),
         ]}
       />
-      <section className="hero-root">
-        <div className="hero-anim wrap hero-body">
+      <section className={hero.heroRoot} data-hero>
+        <div className={`${hero.heroAnim} wrap ${hero.heroBody}`}>
           <span className="kicker kicker--300 mb24">Услуги</span>
-          <h1 className="h1-page h1-lines">
+          <h1 className={`${hero.h1Page} ${hero.h1Lines}`}>
             <span>Четыре направления.</span>
             <span>Один ответственный.</span>
           </h1>
-          <p className="hero-sub">
+          <p className={hero.heroSub}>
             Наша специализация — создание сложных технических систем «под ключ»: от разработки
             конструкторской документации до серийного выпуска антенных систем и электронных
             модулей.
           </p>
         </div>
       </section>
-      <section className="wrap sec-rows">
+      <section className={`wrap ${shared.secRows}`}>
         {ROWS.map((r) => (
-          <TransitionLink href={r.href} className="row-link" key={r.n}>
-            <span className="row-n">{r.n}</span>
+          <TransitionLink href={r.href} className={styles.rowLink} key={r.n}>
+            <span className={styles.rowN}>{r.n}</span>
             <div>
-              <h2 className="row-title">{r.title}</h2>
-              <span className="row-sub">{r.sub}</span>
+              <h2 className={styles.rowTitle}>{r.title}</h2>
+              <span className={styles.rowSub}>{r.sub}</span>
             </div>
-            <p className="row-p">{r.p}</p>
-            <span className="row-arrow">
-              <span className="tile-arrow">→</span>
+            <p className={styles.rowP}>{r.p}</p>
+            <span className={styles.rowArrow}>
+              <span className={styles.arrow}>→</span>
             </span>
           </TransitionLink>
         ))}

@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react';
  *  — появление блоков при прокрутке ([data-reveal] → [data-inview]);
  *  — пословное появление заголовков h2 (.words);
  *  — счётчик чисел ([data-count]);
- *  — параллакс фотографий (.photo-cell .par).
+ *  — параллакс фотографий ([data-photo] .par).
  * Запускается заново при смене маршрута.
  */
 export function PageEffects() {
@@ -35,7 +35,7 @@ export function PageEffects() {
 
     const run = () => {
       const roots = document.querySelectorAll(
-        'main > section:not(.marquee):not(.hero-root), main > section:not(.hero-root) > div.wrap, main > div.duotone',
+        'main > section:not([data-marquee]):not([data-hero]), main > section:not([data-hero]) > div.wrap, main > div.duotone',
       );
       const targets = new Set<HTMLElement>();
       roots.forEach((r) => {
@@ -44,7 +44,7 @@ export function PageEffects() {
           return;
         }
         Array.from(r.children).forEach((c) => {
-          if (c.closest('.hero-root')) return;
+          if (c.closest('[data-hero]')) return;
           const grid = getComputedStyle(c).display === 'grid';
           if (grid && c.children.length > 1 && c.children.length <= 8 && !c.matches('form'))
             Array.from(c.children).forEach((g) => targets.add(g as HTMLElement));
@@ -54,7 +54,7 @@ export function PageEffects() {
       targets.forEach((t) => {
         if (t.hasAttribute('data-reveal')) return;
         // у шагов «Как мы работаем» своя анимация подсветки (opacity по data-on) — reveal её перебивал
-        if (t.matches('.pin-step, .pin-line')) return;
+        if (t.matches('[data-step], [data-pin-line]')) return;
         const parent = t.parentElement;
         const idx = parent ? Array.from(parent.children).indexOf(t) : 0;
         t.style.transitionDelay = Math.min(idx, 6) * 90 + 'ms';
@@ -69,8 +69,9 @@ export function PageEffects() {
     const extras = () => {
       document.querySelectorAll<HTMLElement>('main h2:not(.words-done)').forEach((el) => {
         // Заголовок может содержать <br> для принудительного переноса строки; другие вложенные элементы — не анимируем.
+        // Заголовки первых экранов и заголовки внутри ссылок (строки услуг, «следующая услуга») — тоже.
         const hasOther = Array.from(el.children).some((c) => c.tagName !== 'BR');
-        if (el.closest('.hero-root, .row-link, .next-link') || hasOther) {
+        if (el.closest('[data-hero], a') || hasOther) {
           el.classList.add('words-done');
           return;
         }
@@ -121,7 +122,7 @@ export function PageEffects() {
         );
         cio.observe(el);
       });
-      document.querySelectorAll<HTMLElement>('.photo-cell .image-slot:not(.par)').forEach((el) => {
+      document.querySelectorAll<HTMLElement>('[data-photo] [data-slot]:not(.par)').forEach((el) => {
         el.classList.add('par');
         el.style.display = 'block';
         el.style.width = '100%';
@@ -159,7 +160,7 @@ export function PageEffects() {
       return max / fontSize;
     };
     const fitHeadings = () => {
-      document.querySelectorAll<HTMLElement>('main h1, main h2, main h3, .about-quote').forEach((h) => {
+      document.querySelectorAll<HTMLElement>('main h1, main h2, main h3, main [data-fit]').forEach((h) => {
         h.style.fontSize = '';
         h.style.maxWidth = '';
         const base = parseFloat(getComputedStyle(h).fontSize);
@@ -172,7 +173,7 @@ export function PageEffects() {
         const avail = parent.clientWidth - parseFloat(pcs.paddingLeft) - parseFloat(pcs.paddingRight) - 2;
         const own = h.clientWidth - 2;
         const need = ratio * base;
-        const isHero = window.innerWidth <= 600 && h.tagName === 'H1' && !!h.closest('.hero-root');
+        const isHero = window.innerWidth <= 600 && h.tagName === 'H1' && !!h.closest('[data-hero]');
         let size = base;
         if (isHero) {
           size = Math.max(16, Math.min(56, avail / ratio));
@@ -204,7 +205,7 @@ export function PageEffects() {
     if (!parInstalled.current) {
       parInstalled.current = true;
       const par = () => {
-        document.querySelectorAll<HTMLElement>('.photo-cell').forEach((c) => {
+        document.querySelectorAll<HTMLElement>('[data-photo]').forEach((c) => {
           const r = c.getBoundingClientRect();
           if (r.bottom < 0 || r.top > window.innerHeight) return;
           const p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;

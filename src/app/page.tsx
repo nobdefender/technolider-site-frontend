@@ -7,6 +7,9 @@ import { routes, site } from '@/content/site';
 import { JsonLd } from '@/components/JsonLd';
 import { seo } from '@/content/seo';
 import { breadcrumbJsonLd, howToJsonLd, pageMetadata } from '@/lib/seo';
+import hero from '@/styles/hero.module.css';
+import shared from '@/styles/shared.module.css';
+import styles from './page.module.css';
 
 export const metadata = pageMetadata(seo.home);
 
@@ -45,11 +48,11 @@ const MARQUEE = ['Инжиниринг', 'Производство', 'Сборк
 
 function MarqueeRow() {
   return (
-    <span className="marquee-row">
+    <span className={styles.marqueeRow}>
       {MARQUEE.map((w) => (
         <span key={w} style={{ display: 'contents' }}>
           <span>{w}</span>
-          <span className="marquee-dot">·</span>
+          <span className={styles.marqueeDot}>·</span>
         </span>
       ))}
     </span>
@@ -63,20 +66,20 @@ export default function HomePage() {
         data={[breadcrumbJsonLd([{ name: seo.home.crumb, path: seo.home.path }]), howToJsonLd()]}
       />
       {/* Главный экран */}
-      <section className="hero-root hero-home">
-        <div className="hero-shade" />
-        <tile-3d kind="array" mode="hero" data-role="hero" className="hero-3d" />
-        <div className="hero-anim wrap hero-home-body">
+      <section className={`${hero.heroRoot} ${styles.heroHome}`} data-hero>
+        <div className={styles.heroShade} />
+        <tile-3d kind="array" mode="hero" data-role="hero" className={styles.hero3d} />
+        <div className={`${hero.heroAnim} wrap ${styles.heroHomeBody}`}>
           <span className="kicker kicker--300 mb28">
             ООО НПП «Технолидер» · Радиоэлектроника и механосборка
           </span>
-          <h1 className="h1-home">Инжиниринг. Производство. Сборка.</h1>
-          <div className="hero-row">
-            <p className="hero-lead">
+          <h1 className={styles.h1Home}>Инжиниринг. Производство. Сборка.</h1>
+          <div className={styles.heroRow}>
+            <p className={styles.heroLead}>
               Берем на себя полный цикл: от идеи и чертежа до готовой серийной партии
               металлоконструкций и электроники.
             </p>
-            <div className="hero-actions">
+            <div className={styles.heroActions}>
               <TransitionLink href={routes.contacts} className="btn btn-primary blueprint btn-cta">
                 Обсудить проект
                 <Corners />
@@ -90,12 +93,12 @@ export default function HomePage() {
       </section>
 
       {/* 01 · Направления */}
-      <section className="wrap sec-dirs">
+      <section className={`wrap ${styles.secDirs}`}>
         <div className="sheet-head">
           <span className="tech tech-700">01 · Направления</span>
           <span className="tech">Лист 01 / 05 · Формат А1 · Масштаб 1:1</span>
         </div>
-        <div className="sec-intro-block">
+        <div className={styles.secIntroBlock}>
           <h2 className="h2-xl">
             Четыре направления.
             <br />
@@ -107,20 +110,20 @@ export default function HomePage() {
             модулей.
           </p>
         </div>
-        <div className={site.servicesLayout === 'grid' ? 'tiles tiles--2x2' : 'tiles'}>
+        <div className={site.servicesLayout === 'grid' ? `${styles.tiles} ${styles.tiles2x2}` : styles.tiles}>
           {TILES.map((t) => (
-            <TransitionLink href={t.href} className="tile" key={t.n}>
-              <div className="tile-img" />
-              <div className="tile-shade" />
-              <tile-3d kind={t.kind} className="tile-obj" />
-              <span className="tile-n">{t.n}</span>
-              <div className="tile-body">
-                <h3 lang="ru" className="tile-title">
+            <TransitionLink href={t.href} className={styles.tile} data-tile key={t.n}>
+              <div className={styles.tileImg} />
+              <div className={styles.tileShade} />
+              <tile-3d kind={t.kind} className={styles.tileObj} />
+              <span className={styles.tileN}>{t.n}</span>
+              <div className={styles.tileBody}>
+                <h3 lang="ru" className={styles.tileTitle}>
                   {t.title}
                 </h3>
-                <span className="tile-foot">
+                <span className={styles.tileFoot}>
                   <span>{t.sub}</span>
-                  <span className="tile-arrow">→</span>
+                  <span className={styles.tileArrow}>→</span>
                 </span>
               </div>
             </TransitionLink>
@@ -129,49 +132,49 @@ export default function HomePage() {
       </section>
 
       {/* 02 · Предприятие в цифрах */}
-      <section className="wrap sec-stats">
+      <section className={`wrap ${styles.secStats}`}>
         <div className="sheet-head">
           <span className="tech tech-700">02 · Предприятие в цифрах</span>
           <span className="tech">Лист 02 / 05 · Показатели предприятия</span>
         </div>
-        <div className="stats">
-          <div className="stat">
-            <span className="stat-n">24 ч</span>
-            <span className="stat-l">ответ на заявку</span>
-            <span className="stat-s">оценка сроков и стоимости по чертежу</span>
+        <div className={styles.stats}>
+          <div className={styles.stat}>
+            <span className={styles.statN}>24 ч</span>
+            <span className={styles.statL}>ответ на заявку</span>
+            <span className={styles.statS}>оценка сроков и стоимости по чертежу</span>
           </div>
-          <div className="stat">
-            <span className="stat-n">от 1</span>
-            <span className="stat-l">партия, штук</span>
-            <span className="stat-s">опытные образцы и мелкие серии</span>
+          <div className={styles.stat}>
+            <span className={styles.statN}>от 1</span>
+            <span className={styles.statL}>партия, штук</span>
+            <span className={styles.statS}>опытные образцы и мелкие серии</span>
           </div>
-          <div className="stat">
-            <span className="stat-n">ОТК</span>
-            <span className="stat-l">собственный отдел технического контроля</span>
-            <span className="stat-s">каждый узел проходит контроль</span>
+          <div className={styles.stat}>
+            <span className={styles.statN}>ОТК</span>
+            <span className={styles.statL}>собственный отдел технического контроля</span>
+            <span className={styles.statS}>каждый узел проходит контроль</span>
           </div>
-          <div className="stat">
-            <span className="stat-n" data-count="100" data-suffix="%">
+          <div className={styles.stat}>
+            <span className={styles.statN} data-count="100" data-suffix="%">
               0%
             </span>
-            <span className="stat-l">полный цикл</span>
-            <span className="stat-s">от документации до серийного выпуска</span>
+            <span className={styles.statL}>полный цикл</span>
+            <span className={styles.statS}>от документации до серийного выпуска</span>
           </div>
         </div>
       </section>
 
       {/* Бегущая строка */}
-      <section className="marquee" aria-hidden="true">
-        <div className="marquee-track">
+      <section className={styles.marquee} data-marquee aria-hidden="true">
+        <div className={styles.marqueeTrack}>
           <MarqueeRow />
           <MarqueeRow />
         </div>
       </section>
 
       {/* 03 · О предприятии */}
-      <section className="sec-about-home">
-        <div className="wrap about-home-grid">
-          <figure className="blueprint duotone about-fig">
+      <section className={styles.secAboutHome}>
+        <div className={`wrap ${styles.aboutHomeGrid}`}>
+          <figure className={`blueprint duotone ${styles.aboutFig}`}>
             <ImageSlot id="v2-about-photo" placeholder="Фото: производственный цех, крупный план" />
             <Corners />
           </figure>
@@ -223,47 +226,47 @@ export default function HomePage() {
       />
 
       {/* 05 · Производство */}
-      <section className="wrap sec-photos">
+      <section className={`wrap ${styles.secPhotos}`}>
         <div className="sheet-head">
           <span className="tech tech-700">05 · Производство</span>
           <span className="tech">Лист 05 / 05 · Фото: цех, сборочный участок, станок</span>
         </div>
-        <div className="photo-grid">
-          <div className="duotone photo-cell photo-43">
+        <div className={shared.photoGrid}>
+          <div className={`duotone ${shared.photoCell} ${shared.photo43}`} data-photo>
             <ImageSlot id="v2-shop-1" placeholder="Фото: станочный парк" />
           </div>
-          <div className="duotone photo-cell photo-43">
+          <div className={`duotone ${shared.photoCell} ${shared.photo43}`} data-photo>
             <ImageSlot id="v2-shop-2" placeholder="Фото: монтажный участок" />
           </div>
-          <div className="duotone photo-cell photo-43">
+          <div className={`duotone ${shared.photoCell} ${shared.photo43}`} data-photo>
             <ImageSlot id="v2-shop-3" placeholder="Фото: испытательное оборудование" />
           </div>
         </div>
       </section>
 
       {/* Связаться с нами */}
-      <section className="sec-cta">
-        <div className="wrap cta-grid">
+      <section className={styles.secCta}>
+        <div className={`wrap ${styles.ctaGrid}`}>
           <div>
             <span className="kicker kicker--300 mb20">Связаться с нами</span>
-            <h2 className="h2-lg cta-title">Готовы обсудить ваш проект?</h2>
-            <p className="cta-p">
+            <h2 className={`h2-lg ${styles.ctaTitle}`}>Готовы обсудить ваш проект?</h2>
+            <p className={styles.ctaP}>
               Неважно, нужна вам одна сложная деталь или крупная партия антенн — мы найдем
               решение.
             </p>
           </div>
-          <div className="cta-list">
-            <a href={site.phoneHref} className="cta-row">
-              <span className="cta-label">Телефон</span>
-              <span className="cta-val cta-val-phone">{site.phone}</span>
+          <div className={styles.ctaList}>
+            <a href={site.phoneHref} className={styles.ctaRow}>
+              <span className={styles.ctaLabel}>Телефон</span>
+              <span className={`${styles.ctaVal} ${styles.ctaValPhone}`}>{site.phone}</span>
             </a>
-            <a href={`mailto:${site.email}`} className="cta-row cta-row-mail">
-              <span className="cta-label">Почта</span>
-              <span className="cta-val cta-val-mail">{site.email}</span>
+            <a href={`mailto:${site.email}`} className={`${styles.ctaRow} ${styles.ctaRowMail}`}>
+              <span className={styles.ctaLabel}>Почта</span>
+              <span className={`${styles.ctaVal} ${styles.ctaValMail}`}>{site.email}</span>
             </a>
             <TransitionLink
               href={routes.contacts}
-              className="btn btn-primary blueprint btn-cta cta-btn"
+              className={`btn btn-primary blueprint btn-cta ${styles.ctaBtn}`}
             >
               Оставить заявку
               <Corners />

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import styles from './Preloader.module.css';
 
 /** Экран загрузки при первом открытии сайта (как в макете: 1.3 c счётчик, затем уезжает вверх). */
 export function Preloader() {
@@ -27,30 +28,30 @@ export function Preloader() {
   if (gone) return null;
 
   return (
-    <div className="preload" data-done={done ? '' : undefined} aria-hidden="true">
-      <div className="preload-grid" />
-      <div className="preload-frame">
-        <i className="tl" />
-        <i className="tr" />
-        <i className="bl" />
-        <i className="br" />
+    <div className={styles.preload} data-done={done ? '' : undefined} aria-hidden="true">
+      <div className={styles.preloadGrid} />
+      <div className={styles.preloadFrame}>
+        <i className={styles.tl} />
+        <i className={styles.tr} />
+        <i className={styles.bl} />
+        <i className={styles.br} />
       </div>
-      <span className="preload-cnr">ООО НПП «Технолидер» · г. Тула</span>
-      <div className="preload-body">
-        <span className="preload-kicker">Научно-производственное предприятие</span>
-        <div className="preload-brand">Технолидер</div>
-        <div className="preload-sub">Инжиниринг · Производство · Сборка</div>
-        <div className="preload-bar">
+      <span className={styles.preloadCnr}>ООО НПП «Технолидер» · г. Тула</span>
+      <div className={styles.preloadBody}>
+        <span className={styles.preloadKicker}>Научно-производственное предприятие</span>
+        <div className={styles.preloadBrand}>Технолидер</div>
+        <div className={styles.preloadSub}>Инжиниринг · Производство · Сборка</div>
+        <div className={styles.preloadBar}>
           <b />
           <i />
           <b />
         </div>
-        <div className="preload-meta">
+        <div className={styles.preloadMeta}>
           <span>Загрузка чертежей и моделей</span>
-          <span className="preload-num">{pct}%</span>
+          <span className={styles.preloadNum}>{pct}%</span>
         </div>
       </div>
-      <div className="preload-stamp">
+      <div className={styles.preloadStamp}>
         <div>
           <span>Лист</span>
           <b>01</b>

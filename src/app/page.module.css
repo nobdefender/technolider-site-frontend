@@ -1,0 +1,179 @@
+/* Главная страница: главный экран, направления, цифры, бегущая строка, о предприятии, фото, CTA. */
+
+/* — анимации — */
+@keyframes rise { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:none; } }
+@keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+.tile { transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+/* у .tile свой transition, который перекрывал transition появления ([data-reveal]) —
+   из-за этого прозрачность менялась скачком; здесь оба набора свойств объединены */
+.tile[data-reveal] { transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+.tile .tileImg { transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.tile:hover .tileImg { transform:scale(1.06); }
+.tileArrow { font-family:var(--font-heading); }
+.tile .tileArrow { display:inline-block; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+.tile:hover .tileArrow { transform:translateX(10px); }
+.marqueeTrack { display:flex; width:max-content; animation: marquee 28s linear infinite; }
+.marquee:hover .marqueeTrack { animation-play-state:paused; }
+tile-3d.hero3d { animation: rise 1.4s cubic-bezier(.2,.7,.2,1) .4s both; }
+@media (max-width:760px) { tile-3d.hero3d { width:100% !important; opacity:.45 } }
+
+/* — hero — */
+.heroHome { position:relative; min-height:clamp(520px,82vh,760px); display:flex; align-items:center; overflow:hidden; --hero-model-w:min(60vw,900px); }
+.heroShade { position:absolute; inset:0; pointer-events:none; background:linear-gradient(90deg,var(--shade-92) 0%,var(--shade-70) 55%,var(--shade-30) 100%),linear-gradient(0deg,var(--shade-90) 0%,transparent 60%); }
+.hero3d { position:absolute; right:0; top:0; bottom:0; width:var(--hero-model-w); pointer-events:none; }
+.heroHomeBody { position:relative; width:100%; padding-top:72px; padding-bottom:80px; pointer-events:none; }
+/* кегль h1 ограничен так, чтобы самое длинное слово («ПРОИЗВОДСТВО.» ≈ 8.6 × font-size) не заходило под 3D-модель:
+   доступная ширина = от левого края контейнера до модели (в её блок допускаем заход на 20% — там ничего не рисуется) */
+.h1Home { --hero-text-w:calc(100vw - var(--hero-model-w) * 0.8 - (100vw - min(100vw, 1320px)) / 2 - var(--px)); font-size:min(clamp(44px,6.2vw,120px), calc(var(--hero-text-w) / 8.6)); line-height:0.96; letter-spacing:0.01em; text-transform:uppercase; margin:0 0 0 -0.04em; max-width:min(100%,24ch); overflow-wrap:normal; }
+/* текст и кнопки выровнены по верху (в макете — по низу; при переносе кнопок в два ряда текст «проваливался») */
+.heroRow { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:32px; align-items:start; margin-top:48px; }
+.heroLead { margin:0; font-size:clamp(17px,1.5vw,21px); line-height:1.45; max-width:46ch; color:var(--color-accent-200); }
+.heroActions { display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-start; pointer-events:auto; }
+
+/* — направления — */
+.secDirs { padding-top:120px; padding-bottom:96px; }
+.secIntroBlock { margin-bottom:56px; }
+/* 4 плитки в ряд, пока ширина контейнера ≥ 1080px (в макете — через clamp() с процентами,
+   но минификатор CSS ломает эту формулу; при контейнере 1320 − 2·5vw порог = 1200px окна) */
+.tiles { display:grid; gap:2px; grid-template-columns:repeat(4,minmax(0,1fr)); }
+@media (max-width:1199.98px) { .tiles { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.tiles.tiles2x2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+a.tile { position:relative; display:block; aspect-ratio:3/4; background:var(--color-accent-900); color:var(--color-bg); text-decoration:none; overflow:hidden; }
+.tileImg { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 35%,var(--color-accent-800) 0%,var(--color-accent-900) 70%); }
+.tileShade { position:absolute; inset:0; pointer-events:none; background:linear-gradient(0deg,var(--shade-95) 0%,var(--shade-40) 55%,transparent 100%); }
+.tileObj { position:absolute; left:0; right:0; top:7%; height:64%; pointer-events:none; }
+.tileN { position:absolute; top:24px; left:24px; font-family:var(--font-heading); font-weight:600; font-size:15px; letter-spacing:0.14em; color:var(--color-accent-300); pointer-events:none; }
+.tileBody { position:absolute; left:24px; right:24px; bottom:24px; pointer-events:none; }
+.tileTitle { font-size:clamp(20px,1.9vw,30px); line-height:1; letter-spacing:0.01em; text-transform:uppercase; margin:0 0 12px; hyphens:manual; overflow-wrap:break-word; }
+.tileFoot { display:flex; justify-content:space-between; font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-accent-300); }
+
+/* — цифры — */
+.secStats { padding-bottom:120px; }
+/* цифры: 4 в ряд, на узких экранах — 2×2 (auto-fit из макета давал 3+1), на телефоне — столбец */
+.stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); margin-top:-28px; }
+@media (max-width:1100px) { .stats { grid-template-columns:repeat(2,minmax(0,1fr)); } .stat:nth-child(2n) { padding-right:0; } }
+@media (max-width:600px) { .stats { grid-template-columns:minmax(0,1fr); } }
+.stat { padding:20px 32px 40px 0; border-bottom:1px solid var(--color-divider); }
+.stat:last-child { padding-right:0; }
+.statN { display:block; font-family:var(--font-heading); font-weight:600; font-size:clamp(72px,7vw,120px); line-height:0.9; letter-spacing:-0.01em; color:var(--color-accent-700); }
+.statL { display:block; margin-top:20px; font-size:14px; letter-spacing:0.1em; text-transform:uppercase; font-weight:500; text-wrap:balance; overflow-wrap:normal; }
+.statS { display:block; margin-top:6px; font-size:14px; color:var(--color-neutral-600); }
+
+/* — бегущая строка — */
+.marquee { overflow:hidden; border-top:1px solid var(--color-divider); border-bottom:1px solid var(--color-divider); padding:28px 0; }
+.marqueeTrack { gap:0; }
+.marqueeRow { display:flex; gap:56px; padding-right:56px; font-family:var(--font-heading); font-weight:600; font-size:clamp(40px,5vw,80px); line-height:1; letter-spacing:0.02em; text-transform:uppercase; white-space:nowrap; color:var(--color-neutral-300); }
+.marqueeDot { color:var(--color-accent-700); }
+
+/* — о предприятии — */
+.secAboutHome { background:var(--color-neutral-200); }
+.aboutHomeGrid { padding-top:120px; padding-bottom:120px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:56px clamp(32px,6vw,120px); align-items:center; }
+.aboutFig { margin:0; aspect-ratio:4/5; max-height:720px; }
+
+/* — фото — */
+.secPhotos { padding-top:120px; padding-bottom:120px; }
+
+/* — CTA — */
+.secCta { background:var(--color-accent-900); color:var(--color-bg); }
+.ctaGrid { padding-top:72px; padding-bottom:72px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:48px clamp(48px,7vw,120px); align-items:stretch; }
+.ctaTitle { line-height:0.96; margin:0; max-width:16ch; }
+.ctaP { margin:20px 0 0; max-width:46ch; font-size:17px; line-height:1.5; color:var(--color-accent-200); }
+.ctaList { display:flex; flex-direction:column; border-top:1px solid var(--color-accent-800); }
+a.ctaRow { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:16px 24px; align-items:center; padding:22px 0; border-bottom:1px solid var(--color-accent-800); text-decoration:none; color:var(--color-bg); }
+a.ctaRow:hover { border-color:var(--color-accent-500); color:var(--color-bg); }
+a.ctaRow.ctaRowMail, a.ctaRow.ctaRowMail:hover { color:var(--color-accent-200); }
+.ctaLabel { font-family:var(--font-body); font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-accent-300); }
+.ctaVal { font-family:var(--font-heading); font-weight:600; letter-spacing:0.02em; line-height:1; overflow-wrap:anywhere; text-align:right; }
+.ctaValPhone { font-size:clamp(28px,3vw,44px); }
+.ctaValMail { font-size:clamp(18px,1.8vw,26px); }
+:global(.btn).ctaBtn { display:flex; align-items:center; justify-content:center; margin-top:auto; padding:20px 28px; }
+
+/* WebKit: элементы сеток и флексов не растягивают колонку своим min-content (aspect-ratio, длинные слова) */
+.aboutHomeGrid > *, .ctaGrid > *, .heroRow > *, .tiles > *, .stats > * { min-width:0; }
+
+@media (max-width:900px) {
+  /* двухколоночные сетки — в одну колонку (minmax(320px) даёт слишком узкие колонки) */
+  .aboutHomeGrid, .ctaGrid { grid-template-columns:minmax(0,1fr); }
+  /* фото «О предприятии» в одной колонке — по центру (из-за max-height оно уже колонки) */
+  .aboutFig { justify-self:center; width:min(100%, calc(720px * 4 / 5)); min-width:0; }
+}
+
+/* — широкие экраны: текст и кнопки рядом в одной строке (auto-fit из макета на 1440–1520px давал три узких
+     колонки, и кнопки складывались в два ряда) — */
+@media (min-width:1441px) {
+  .heroRow { grid-template-columns:minmax(0,520px) auto; justify-content:start; }
+}
+/* 1441–1700: модель уже, чтобы кнопки не оказывались под её опорой */
+@media (min-width:1441px) and (max-width:1700px) {
+  .heroHome { --hero-model-w:min(44vw,760px); }
+}
+
+/* — главный экран на небольших десктопах (1101–1440): текст и кнопки в одной колонке слева, модель уже — */
+@media (min-width:1101px) and (max-width:1440px) {
+  .heroHome { --hero-model-w:min(50vw,760px); }
+  .heroRow { grid-template-columns:minmax(0,1fr); max-width:560px; gap:28px; }
+}
+
+/* — главный экран на планшетах: модель уже и справа, текст и кнопки — в левой колонке, без наложения — */
+@media (min-width:761px) and (max-width:1100px) {
+  .heroHome { --hero-model-w:40vw; }
+  .heroHomeBody { padding-right:calc(40vw + 16px); }
+  .heroRow { grid-template-columns:minmax(0,1fr); gap:28px; }
+  .h1Home { font-size:min(clamp(36px,5.2vw,72px), calc((100vw - 40vw - 16px - 2 * var(--px)) / 8.6)); }
+}
+
+/* — главный экран на телефонах: без 3D-модели, компактнее по высоте, кнопки под текстом — */
+@media (max-width:760px) {
+  .heroHome tile-3d.hero3d { display:none !important; }
+  .heroHome { min-height:0; }
+  .h1Home { font-size:clamp(44px,6.2vw,120px); }
+  .heroHomeBody { padding-top:48px; padding-bottom:56px; }
+  .heroRow { grid-template-columns:minmax(0,1fr); gap:28px; margin-top:32px; }
+}
+
+/* — телефоны — */
+@media (max-width:600px) {
+  .tiles, .tiles.tiles2x2 { grid-template-columns:minmax(0,1fr); }
+  a.tile { aspect-ratio:16/10; }
+  .tileObj { top:0; height:58%; }
+  .tileTitle { font-size:24px; }
+  .stat { padding-right:0; }
+  .statN { font-size:clamp(64px,18vw,96px); }
+  .marquee { padding:20px 0; }
+  .marqueeRow { gap:32px; padding-right:32px; }
+  .heroHome { min-height:0; }
+  .secDirs { padding-top:56px; padding-bottom:48px; }
+  .secIntroBlock { margin-bottom:40px; }
+  .secStats { padding-bottom:48px; }
+  .stat { padding-bottom:32px; }
+  .aboutHomeGrid { padding-top:56px; padding-bottom:56px; gap:36px; }
+  .secPhotos { padding-top:56px; padding-bottom:56px; }
+  .ctaGrid { padding-top:48px; padding-bottom:48px; gap:32px; }
+  :global(.btn).ctaBtn { padding:18px 24px; }
+  .heroHomeBody { padding-bottom:56px; }
+  .heroRow { margin-top:36px; gap:24px; }
+}
+
+/* — узкие телефоны — */
+@media (max-width:480px) {
+  a.tile { aspect-ratio:4/3; }
+  .tileObj { top:1%; height:55%; }
+  .h1Home { font-size:clamp(30px,9.5vw,44px); }
+  .heroLead { font-size:17px; }
+  .ctaValPhone { font-size:clamp(24px,7vw,32px); }
+  .ctaValMail { font-size:clamp(16px,4.8vw,20px); }
+}
+
+/* — очень узкие экраны (320px) — */
+@media (max-width:380px) {
+  a.tile { aspect-ratio:1/1; }
+  .tileObj { top:2%; height:52%; }
+  .tileTitle { font-size:clamp(18px,6.2vw,22px); }
+}
+
+/* — сенсорные устройства: hover-эффекты не «залипают» после тапа — */
+@media (hover: none) {
+  .tile:hover .tileImg, .tile:hover .tileArrow { transform:none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) { .marqueeTrack { animation:none } }

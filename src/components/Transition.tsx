@@ -14,6 +14,8 @@ import {
   type ReactNode,
 } from 'react';
 import { routeLabels, routeSheets, site } from '@/content/site';
+import pre from './Preloader.module.css';
+import styles from './Transition.module.css';
 
 type Navigate = (href: string) => void;
 
@@ -91,38 +93,38 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     <TransitionCtx.Provider value={navigate}>
       {children}
       <div
-        className="curtain"
+        className={styles.curtain}
         data-in={state.in ? '' : undefined}
         data-out={state.out ? '' : undefined}
         aria-hidden="true"
       >
         {/* key перезапускает анимации содержимого при каждом переходе */}
-        <div className="curtain-inner" key={state.seq}>
-          <div className="preload-grid" />
-          <div className="preload-frame">
-            <i className="tl" />
-            <i className="tr" />
-            <i className="bl" />
-            <i className="br" />
+        <div className={styles.curtainInner} key={state.seq}>
+          <div className={`${pre.preloadGrid} ${styles.curtainGrid}`} />
+          <div className={pre.preloadFrame}>
+            <i className={pre.tl} />
+            <i className={pre.tr} />
+            <i className={pre.bl} />
+            <i className={pre.br} />
           </div>
-          <span className="preload-cnr">{site.legalShort} · г. Тула</span>
-          <div className="curtain-body">
-            <span className="curtain-kicker">
+          <span className={pre.preloadCnr}>{site.legalShort} · г. Тула</span>
+          <div className={styles.curtainBody}>
+            <span className={styles.curtainKicker}>
               Лист {sheet.n} / {sheet.of} · {sheet.kicker}
             </span>
-            <span className="curtain-label">{label}</span>
-            <span className="curtain-sub">Инжиниринг · Производство · Сборка</span>
-            <div className="curtain-bar">
+            <span className={styles.curtainLabel}>{label}</span>
+            <span className={styles.curtainSub}>Инжиниринг · Производство · Сборка</span>
+            <div className={styles.curtainBar}>
               <b />
               <i />
               <b />
             </div>
-            <div className="curtain-meta">
+            <div className={styles.curtainMeta}>
               <span>Переход на лист</span>
               <span>{sheet.n} / {sheet.of}</span>
             </div>
           </div>
-          <div className="preload-stamp">
+          <div className={pre.preloadStamp}>
             <div>
               <span>Лист</span>
               <b>{sheet.n}</b>

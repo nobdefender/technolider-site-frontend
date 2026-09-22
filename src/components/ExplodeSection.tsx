@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import styles from './ExplodeSection.module.css';
 
 type Step = { n: string; t: string; tech: string };
 
@@ -33,19 +34,19 @@ export function ExplodeSection({
 }: Props) {
   return (
     <section
-      className={height === '340vh' ? 'sec-explode h340' : 'sec-explode'}
+      className={height === '340vh' ? `${styles.secExplode} ${styles.h340}` : styles.secExplode}
       data-dark
       data-explode
     >
-      <div className="ex-stage">
-        <div className="ex-grid">
+      <div className={styles.exStage} data-ex-stage>
+        <div className={styles.exGrid}>
           <div>
-            <div className="sheet-head mb64">
+            <div className="sheet-head mb64" data-ex-head>
               <span className="tech">{canvasHead}</span>
-              <span className="tech ex-hint">Прокрутите</span>
+              <span className={`tech ${styles.exHint}`}>Прокрутите</span>
             </div>
-            <div className="ex-canvas">
-              <tile-3d kind={kind} mode="explode" className="ex-3d" />
+            <div className={styles.exCanvas}>
+              <tile-3d kind={kind} mode="explode" className={styles.ex3d} />
               {canvasExtra}
             </div>
           </div>
@@ -55,11 +56,11 @@ export function ExplodeSection({
               <span className="tech">{headRight}</span>
             </div>
             <h2 className="h2-md">{title}</h2>
-            <p className="ex-lead">{lead}</p>
-            <div className="ex-list">
+            <p className={styles.exLead}>{lead}</p>
+            <div className={styles.exList}>
               {steps.map((s) => (
-                <div className="ex-step" data-ex-step key={s.n}>
-                  <span className="ex-n">{s.n}</span>
+                <div className={styles.exStep} data-ex-step key={s.n}>
+                  <span className={styles.exN}>{s.n}</span>
                   <span>{s.t}</span>
                   <span className="tech">{s.tech}</span>
                 </div>

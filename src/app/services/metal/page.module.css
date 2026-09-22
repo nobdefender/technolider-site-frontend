@@ -1,0 +1,15 @@
+/* Металлообработка: выноски размеров на 3D-сцене разнесённого вида. */
+.dim { position:absolute; left:0; top:0; pointer-events:none; opacity:0; transition:opacity .6s cubic-bezier(.2,.7,.2,1); will-change:transform; }
+.dim[data-on] { opacity:1; }
+.dimDot { position:absolute; left:-4px; top:-4px; width:8px; height:8px; border-radius:50%; background:var(--color-accent-300); box-shadow:0 0 0 4px rgba(181, 217, 253, 0.25); }
+.dimLeader { position:absolute; left:0; top:0; height:1px; width:56px; background:var(--color-accent-300); transform-origin:0 0; }
+.dimText { position:absolute; left:0; top:0; padding:8px 12px; border:1px solid var(--color-accent-600); background:var(--shade-88); white-space:nowrap; }
+.dimText b { display:block; font-family:var(--font-heading); font-weight:600; font-size:clamp(16px,1.4vw,22px); letter-spacing:0.04em; line-height:1; color:var(--color-bg); font-variant-numeric:tabular-nums; }
+.dimText small { display:block; margin-top:5px; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-accent-300); }
+
+@media (max-width:600px) {
+  /* выноски размеров на телефоне: только значение (расшифровка — в списке ниже) */
+  .dimText { padding:5px 7px; }
+  .dimText b { font-size:13px; }
+  .dimText small { display:none; }
+}

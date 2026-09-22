@@ -1,16 +1,19 @@
 'use client';
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import styles from './CopyButton.module.css';
 
 type Props = {
   text: string;
   title: string;
   className?: string;
+  /** accent — вариант для светлого фона (цвет accent-700) */
+  variant?: 'default' | 'accent';
   children: ReactNode;
 };
 
 /** Кнопка «скопировать» с галочкой-подтверждением (copy-line + copy-mark в макете). */
-export function CopyButton({ text, title, className, children }: Props) {
+export function CopyButton({ text, title, className, variant = 'default', children }: Props) {
   const [on, setOn] = useState(false);
   const timer = useRef<number | null>(null);
 
@@ -51,14 +54,14 @@ export function CopyButton({ text, title, className, children }: Props) {
   return (
     <button
       type="button"
-      className={['copy-line', className].filter(Boolean).join(' ')}
+      className={[styles.copyLine, variant === 'accent' && styles.accent, className].filter(Boolean).join(' ')}
       onClick={copy}
       title={title}
     >
       {children}
-      <i className="copy-mark" data-on={on ? '' : undefined} aria-hidden="true">
-        <b className="cm-box" />
-        <b className="cm-tick" />
+      <i className={styles.copyMark} data-on={on ? '' : undefined} aria-hidden="true">
+        <b className={styles.cmBox} />
+        <b className={styles.cmTick} />
       </i>
     </button>
   );

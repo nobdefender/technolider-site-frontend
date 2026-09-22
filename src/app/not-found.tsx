@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Corners } from '@/components/Corners';
 import { TransitionLink } from '@/components/Transition';
 import { routes, site } from '@/content/site';
+import hero from '@/styles/hero.module.css';
+import shared from '@/styles/shared.module.css';
 
 // noindex для 404 Next.js добавляет сам
 export const metadata: Metadata = {
@@ -11,15 +13,15 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main data-screen-label="404">
-      <section className="hero-root">
-        <div className="hero-anim wrap hero-body">
+      <section className={hero.heroRoot} data-hero>
+        <div className={`${hero.heroAnim} wrap ${hero.heroBody}`}>
           <span className="kicker kicker--300 mb24">Ошибка 404</span>
-          <h1 className="h1-page">Такого листа в комплекте нет</h1>
-          <p className="hero-sub">
+          <h1 className={hero.h1Page}>Такого листа в комплекте нет</h1>
+          <p className={hero.heroSub}>
             Страница удалена или адрес введён с ошибкой. Перейдите на главную или посмотрите, чем мы
             можем быть полезны.
           </p>
-          <div className="actions" style={{ marginTop: 40 }}>
+          <div className={shared.actions} style={{ marginTop: 40 }}>
             <TransitionLink href={routes.home} className="btn btn-primary blueprint btn-cta2">
               На главную
               <Corners />
@@ -30,7 +32,7 @@ export default function NotFound() {
           </div>
         </div>
       </section>
-      <section className="wrap sec-rows">
+      <section className={`wrap ${shared.secRows}`}>
         <div className="sheet-head">
           <span className="tech tech-700">Связаться</span>
           <span className="tech">{site.hours}</span>

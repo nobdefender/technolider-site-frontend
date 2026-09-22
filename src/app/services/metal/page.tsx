@@ -5,6 +5,7 @@ import { ServiceHero, ServiceIntro, WidePhoto } from '@/components/ServiceIntro'
 import { seo } from '@/content/seo';
 import { routes } from '@/content/site';
 import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from '@/lib/seo';
+import styles from './page.module.css';
 
 export const metadata = pageMetadata(seo.metal);
 
@@ -62,10 +63,10 @@ export default function MetalPage() {
           { n: '05', t: 'Шероховатость Ra 1,6', tech: 'Сопрягаемые поверхности' },
         ]}
         canvasExtra={DIMS.map((d, i) => (
-          <div className="dim" data-dim={i} data-side={d.side} key={i}>
-            <i className="dim-dot" />
-            <span className="dim-leader" />
-            <span className="dim-text">
+          <div className={styles.dim} data-dim={i} data-side={d.side} key={i}>
+            <i className={styles.dimDot} />
+            <span className={styles.dimLeader} />
+            <span className={styles.dimText}>
               <b>{d.b}</b>
               <small>{d.s}</small>
             </span>

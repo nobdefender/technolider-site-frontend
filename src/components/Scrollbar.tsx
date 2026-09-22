@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
+import styles from './Scrollbar.module.css';
 
 const MIN_THUMB = 40;
 
@@ -106,7 +107,7 @@ export function Scrollbar() {
   return (
     <div
       ref={trackRef}
-      className="scrollbar"
+      className={styles.scrollbar}
       data-visible={visible ? '' : undefined}
       data-dragging={dragging ? '' : undefined}
       onPointerDown={onTrackDown}
@@ -114,7 +115,7 @@ export function Scrollbar() {
     >
       <div
         ref={thumbRef}
-        className="scrollbar-thumb"
+        className={styles.scrollbarThumb}
         onPointerDown={onThumbDown}
         onPointerMove={onThumbMove}
         onPointerUp={onThumbUp}

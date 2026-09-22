@@ -1,5 +1,7 @@
 'use client';
 
+import styles from './PrivacyToc.module.css';
+
 /** Оглавление политики конфиденциальности — прокрутка к разделу с отступом под шапку. */
 export function PrivacyToc({ items }: { items: { id: string; n: string; t: string }[] }) {
   const jump = (id: string) => {
@@ -11,11 +13,11 @@ export function PrivacyToc({ items }: { items: { id: string; n: string; t: strin
       });
   };
   return (
-    <nav className="pp-toc">
+    <nav className={styles.ppToc}>
       <span className="tech mb14">Содержание</span>
       {items.map((it) => (
-        <button type="button" className="toc-item" key={it.id} onClick={() => jump(it.id)}>
-          <span className="toc-n">{it.n}</span>
+        <button type="button" className={styles.tocItem} key={it.id} onClick={() => jump(it.id)}>
+          <span className={styles.tocN}>{it.n}</span>
           <span>{it.t}</span>
         </button>
       ))}

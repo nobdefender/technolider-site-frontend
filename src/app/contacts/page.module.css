@@ -1,0 +1,63 @@
+/* Страница «Контакты»: первый экран со способами связи, карта, форма, реквизиты. */
+.contactsHero { padding-top:96px; padding-bottom:96px; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:48px clamp(32px,6vw,120px); align-items:end; }
+.cList { display:flex; flex-direction:column; border-top:1px solid var(--color-accent-800); }
+.cRow { display:grid; grid-template-columns:110px 1fr; gap:16px; padding:22px 0; border-bottom:1px solid var(--color-accent-800); align-items:baseline; }
+.cLabel { font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-accent-300); }
+a.cPhone { font-family:var(--font-heading); font-weight:600; font-size:clamp(26px,2.6vw,36px); letter-spacing:0.02em; color:var(--color-bg); text-decoration:none; }
+a.cPhone:hover { color:var(--color-bg); }
+a.cMail { font-family:var(--font-heading); font-weight:600; font-size:clamp(22px,2.2vw,30px); letter-spacing:0.02em; color:var(--color-accent-300); text-decoration:none; overflow-wrap:anywhere; }
+a.cMail:hover { color:var(--color-accent-300); }
+.cVal { color:var(--color-accent-200); }
+
+/* — карта (сам iframe живёт в layout — components/MapHost.tsx — и накладывается на .mapWrap) — */
+.mapWrap { position:relative; width:100%; height:clamp(420px,56vh,640px); background:var(--color-accent-900); overflow:hidden; }
+.mapShade { position:absolute; inset:0; z-index:2; pointer-events:none; background:linear-gradient(0deg,var(--shade-60) 0%,transparent 35%); }
+.mapCard { position:absolute; z-index:2; left:var(--px); bottom:32px; background:var(--color-accent-900); color:var(--color-bg); padding:20px 24px; border-color:var(--color-accent-500); max-width:min(420px,calc(100% - 40px)); }
+.mapCard > :global(.corner) { color:var(--color-accent-300); }
+.mapK { display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-accent-300); margin-bottom:8px; }
+.mapCity { display:block; font-family:var(--font-heading); font-weight:600; font-size:24px; line-height:1.05; letter-spacing:0.02em; text-transform:uppercase; }
+.mapAddr { display:block; margin-top:6px; font-size:14px; color:var(--color-accent-200); }
+a.mapLink { display:inline-flex; align-items:center; gap:8px; margin-top:14px; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-accent-300); text-decoration:none; border-bottom:1px solid var(--color-accent-700); padding-bottom:4px; transition:color .35s, border-color .35s; }
+a.mapLink:hover { color:var(--color-bg); border-color:var(--color-accent-300); }
+a.mapLink .arrow { display:inline-block; font-family:var(--font-heading); transition:transform .5s cubic-bezier(.2,.7,.2,1); }
+a.mapLink:hover .arrow { transform:translateX(6px); }
+
+/* — форма — */
+.secForm { padding-top:96px; padding-bottom:120px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:56px clamp(32px,6vw,120px); align-items:start; }
+
+/* — реквизиты — */
+.secReq { padding-bottom:120px; }
+.reqHead { display:flex; flex-wrap:wrap; gap:12px 32px; align-items:baseline; justify-content:space-between; margin-bottom:24px; }
+.reqGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); border-top:1px solid var(--color-divider); }
+.req { padding:24px 24px 24px 0; border-bottom:1px solid var(--color-divider); }
+.req:last-child { padding-right:0; }
+.reqK { display:block; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-700); margin-bottom:8px; }
+.reqV { font-size:15px; line-height:22px; }
+
+/* WebKit: элементы сеток не растягивают колонку своим min-content */
+.contactsHero > *, .secForm > *, .reqGrid > * { min-width:0; }
+
+@media (max-width:900px) {
+  /* двухколоночные сетки — в одну колонку (minmax(320px) даёт слишком узкие колонки) */
+  .contactsHero, .secForm { grid-template-columns:minmax(0,1fr); }
+}
+
+@media (max-width:600px) {
+  .contactsHero { padding-top:56px; padding-bottom:48px; gap:32px; }
+  .cRow { grid-template-columns:minmax(0,1fr); gap:6px; padding:18px 0; }
+  .mapWrap { height:clamp(360px,60vh,520px); }
+  .mapCard { left:16px; right:16px; bottom:16px; max-width:none; padding:16px 18px; }
+  .secForm { padding-top:56px; padding-bottom:56px; gap:32px; }
+  .secReq { padding-bottom:56px; }
+  .req { padding-right:0; }
+}
+
+@media (max-width:480px) {
+  .cPhone { font-size:clamp(24px,7.5vw,30px); }
+  .cMail { font-size:clamp(18px,5.5vw,24px); }
+}
+
+/* — сенсорные устройства: hover-эффекты не «залипают» после тапа — */
+@media (hover: none) {
+  a.mapLink:hover .arrow { transform:none !important; }
+}
