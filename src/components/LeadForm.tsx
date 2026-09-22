@@ -222,7 +222,7 @@ export function LeadForm() {
             <span className={styles.dropAction}>Выберите файлы</span>
             <span className={styles.dropHint}>
               или перетащите сюда · до {FILES_MAX} файлов по {FILE_MAX_MB} МБ · PDF, DWG, DOC, XLS,
-              изображения, архивы
+              изображения
             </span>
           </label>
         </div>

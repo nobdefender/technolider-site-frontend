@@ -55,11 +55,12 @@ export function validateLead(fields: LeadFields): LeadErrors {
 /** Лимиты совпадают с бэкендом (UPLOADS_MAX_FILES / UPLOADS_MAX_FILE_MB). */
 export const FILES_MAX = 3;
 export const FILE_MAX_MB = 5;
+/** Архивы не принимаем: содержимое архива по расширению не проверить. */
 export const FILE_EXT =
-  /\.(pdf|jpe?g|png|webp|heic|tiff?|docx?|xlsx?|zip|rar|7z|dwg|dxf|step|stp|iges|igs|sldprt|sldasm|txt|csv)$/i;
+  /\.(pdf|jpe?g|png|webp|heic|tiff?|docx?|xlsx?|dwg|dxf|step|stp|iges|igs|sldprt|sldasm|txt|csv)$/i;
 /** Для атрибута accept у <input type="file"> */
 export const FILE_ACCEPT =
-  '.pdf,.jpg,.jpeg,.png,.webp,.heic,.tif,.tiff,.doc,.docx,.xls,.xlsx,.zip,.rar,.7z,.dwg,.dxf,.step,.stp,.iges,.igs,.sldprt,.sldasm,.txt,.csv';
+  '.pdf,.jpg,.jpeg,.png,.webp,.heic,.tif,.tiff,.doc,.docx,.xls,.xlsx,.dwg,.dxf,.step,.stp,.iges,.igs,.sldprt,.sldasm,.txt,.csv';
 
 /** Проверка выбранных файлов. Возвращает принятые файлы и текст ошибки, если что-то отсеяно. */
 export function checkFiles(current: File[], added: File[]): { files: File[]; error?: string } {
