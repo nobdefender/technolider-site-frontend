@@ -51,7 +51,7 @@ export default function AboutPage() {
       <section className={hero.heroRoot} data-hero>
         <div className={`${hero.heroAnim} wrap ${hero.heroBody}`}>
           <span className="kicker kicker--300 mb24">О компании</span>
-          <h1 className={hero.h1Page}>ООО НПП «Технолидер»</h1>
+          <h1 className={`${hero.h1Page} ${hero.h1One}`}>ООО НПП «Технолидер»</h1>
           <p className={hero.heroSub}>
             Научно-производственное предприятие полного цикла в сфере радиоэлектроники и
             механо-сборочных работ.

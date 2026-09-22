@@ -131,6 +131,22 @@ export function PageEffects() {
       });
     };
 
+    // Русская типографика: тире не должно начинать строку. Привязываем его к предыдущему
+    // слову неразрывным пробелом — перенос тогда случится после тире, а не перед ним.
+    // Замена идемпотентна: после неё пробела перед тире уже нет.
+    const bindDashes = () => {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: (n) =>
+          n.parentElement && /^(SCRIPT|STYLE|TEXTAREA)$/.test(n.parentElement.tagName)
+            ? NodeFilter.FILTER_REJECT
+            : NodeFilter.FILTER_ACCEPT,
+      });
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        const text = n.textContent;
+        if (text && / [—–]/.test(text)) n.textContent = text.replace(/ ([—–])/g, '\u00A0$1');
+      }
+    };
+
     // Подгонка кегля заголовков под реальную ширину текста (шрифт на iPhone шире, чем на Windows,
     // поэтому формулы в CSS не гарантируют, что самое длинное слово поместится):
     //  — любой заголовок ужимается, если его самое длинное слово шире контейнера;
@@ -196,6 +212,7 @@ export function PageEffects() {
 
     let raf = requestAnimationFrame(() => {
       raf = requestAnimationFrame(() => {
+        bindDashes();
         fitHeadings();
         run();
         extras();

@@ -73,6 +73,13 @@ tile-3d.page3d {
   overflow-wrap: normal;
 }
 
+/* Заголовок строго в одну строку («ООО НПП «Технолидер»»): кегль подгоняет
+   fitHeadings — он меряет nowrap-строку целиком и ужимает её под ширину родителя. */
+.h1Page.h1One {
+  white-space: nowrap;
+  max-width: none;
+}
+
 .h1Page.w24 {
   max-width: min(100%, 24ch);
 }
