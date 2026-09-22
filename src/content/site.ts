@@ -52,6 +52,13 @@ export const mapSrc =
   encodeURIComponent(site.map.lat) +
   '%2Cpm2wtl&lang=ru_RU';
 
+/**
+ * Ключ Яндекс Карт JS API (NEXT_PUBLIC_YMAPS_API_KEY).
+ * Если задан — карта рисуется через JS API: без рекламного блока и с тёмной темой.
+ * Если пуст — используется бесплатный виджет (с рекламой Яндекса).
+ */
+export const ymapsApiKey = process.env.NEXT_PUBLIC_YMAPS_API_KEY || '';
+
 /** Ссылка на точку в Яндекс Картах (открывается в новой вкладке). */
 export const mapLink =
   'https://yandex.ru/maps/?ll=' +
