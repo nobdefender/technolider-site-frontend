@@ -1,4 +1,4 @@
-// Правила проверки формы заявки — общие для клиента (LeadForm) и сервера (api/lead).
+// Правила проверки формы заявки — общие для клиента (LeadForm) и бэкенда (POST /api/leads).
 
 export type LeadFields = { name: string; phone: string; email: string; task: string };
 export type LeadErrors = Partial<Record<keyof LeadFields, string>>;
@@ -49,4 +49,44 @@ export function validateLead(fields: LeadFields): LeadErrors {
   if (f.email && !EMAIL_RE.test(f.email)) errors.email = 'Укажите корректный адрес почты';
   if (f.task.length < 10) errors.task = 'Опишите задачу — хотя бы в двух словах';
   return errors;
+}
+
+// ── вложения ─────────────────────────────────────────────────────────────
+/** Лимиты совпадают с бэкендом (UPLOADS_MAX_FILES / UPLOADS_MAX_FILE_MB). */
+export const FILES_MAX = 3;
+export const FILE_MAX_MB = 5;
+export const FILE_EXT =
+  /\.(pdf|jpe?g|png|webp|heic|tiff?|docx?|xlsx?|zip|rar|7z|dwg|dxf|step|stp|iges|igs|sldprt|sldasm|txt|csv)$/i;
+/** Для атрибута accept у <input type="file"> */
+export const FILE_ACCEPT =
+  '.pdf,.jpg,.jpeg,.png,.webp,.heic,.tif,.tiff,.doc,.docx,.xls,.xlsx,.zip,.rar,.7z,.dwg,.dxf,.step,.stp,.iges,.igs,.sldprt,.sldasm,.txt,.csv';
+
+/** Проверка выбранных файлов. Возвращает принятые файлы и текст ошибки, если что-то отсеяно. */
+export function checkFiles(current: File[], added: File[]): { files: File[]; error?: string } {
+  const files = [...current];
+  let error: string | undefined;
+  for (const f of added) {
+    if (files.length >= FILES_MAX) {
+      error = `Можно приложить не больше ${FILES_MAX} файлов`;
+      break;
+    }
+    if (!FILE_EXT.test(f.name)) {
+      error = `Формат не поддерживается: ${f.name}`;
+      continue;
+    }
+    if (f.size > FILE_MAX_MB * 1024 * 1024) {
+      error = `Файл больше ${FILE_MAX_MB} МБ: ${f.name}`;
+      continue;
+    }
+    if (files.some((x) => x.name === f.name && x.size === f.size)) continue;
+    files.push(f);
+  }
+  return { files, error };
+}
+
+/** «1,4 МБ» / «860 КБ» */
+export function fileSize(bytes: number): string {
+  return bytes >= 1024 * 1024
+    ? (bytes / 1024 / 1024).toFixed(1).replace('.', ',') + ' МБ'
+    : Math.max(1, Math.round(bytes / 1024)) + ' КБ';
 }

@@ -53,6 +53,16 @@ export const mapSrc =
   '%2Cpm2wtl&lang=ru_RU';
 
 /**
+ * Адрес бэкенда (NEXT_PUBLIC_API_URL). Пусто — тот же домен, запросы идут на /api/…
+ * (в production nginx проксирует /api/ на бэкенд). Для локальной разработки:
+ * NEXT_PUBLIC_API_URL=http://localhost:4000
+ */
+export const apiBase = (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/$/, '');
+
+/** Клиентский ключ Yandex SmartCaptcha. Пусто — вместо виджета обычный чекбокс (для стенда). */
+export const smartCaptchaKey = process.env.NEXT_PUBLIC_SMARTCAPTCHA_KEY || '';
+
+/**
  * Ключ Яндекс Карт JS API (NEXT_PUBLIC_YMAPS_API_KEY).
  * Если задан — карта рисуется через JS API: без рекламного блока и с тёмной темой.
  * Если пуст — используется бесплатный виджет (с рекламой Яндекса).

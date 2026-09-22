@@ -6,6 +6,26 @@
 .leadForm :global(.field) { position:relative; }
 .fieldError { position:absolute; left:0; right:0; top:100%; margin-top:3px; font-size:12px; line-height:16px; color:var(--color-error); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .spanAll { grid-column:1/-1; }
+/* вложения: зона выбора и перетаскивания файлов */
+.drop { grid-column:1/-1; position:relative; display:flex; align-items:center; padding:18px 20px; background:var(--color-surface); transition:background .3s, border-color .3s; }
+.drop[data-over] { background:var(--color-accent-100); border-color:var(--color-accent-500); }
+.fileInput { position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
+.dropLabel { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; cursor:pointer; margin:0; }
+.dropAction { font-family:var(--font-heading); font-weight:600; font-size:14px; letter-spacing:0.08em; text-transform:uppercase; color:var(--color-accent-700); border-bottom:1px solid rgba(65,97,128,.4); }
+.drop:hover .dropAction { color:var(--color-accent-800); border-color:currentColor; }
+.fileInput:focus-visible + .dropLabel .dropAction { outline:2px solid var(--color-accent); outline-offset:3px; }
+.dropHint { font-size:12px; line-height:18px; color:var(--color-neutral-600); }
+.fileList { grid-column:1/-1; list-style:none; margin:12px 0 0; padding:0; border-top:1px solid var(--color-divider); }
+.fileItem { display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid var(--color-divider); font-size:14px; }
+.fileName { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.fileSize { font-size:12px; color:var(--color-neutral-600); font-variant-numeric:tabular-nums; }
+.fileRemove { width:24px; height:24px; padding:0; background:none; border:0; font-size:20px; line-height:1; color:var(--color-neutral-600); cursor:pointer; transition:color .25s; }
+.fileRemove:hover { color:var(--color-error); }
+.fileError { display:block; margin-top:8px; font-size:12px; line-height:16px; color:var(--color-error); }
+
+/* поле-ловушка для ботов: вне потока, недоступно людям */
+.honeypot { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+
 .captcha { grid-column:1/-1; display:flex; align-items:center; gap:16px; padding:14px 18px; max-width:340px; }
 .captchaLabel { display:flex; align-items:center; gap:12px; cursor:pointer; flex:1; font-size:15px; }
 .captchaLabel input { width:22px; height:22px; accent-color:var(--color-accent); margin:0; }
