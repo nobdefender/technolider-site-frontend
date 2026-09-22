@@ -12,7 +12,7 @@ const pageImages: Partial<Record<keyof typeof seo, (keyof typeof images)[]>> = {
   metal: ['v2-metal-hero'],
   assembly: ['v2-assembly-hero'],
   docs: ['v2-docs-hero'],
-  about: ['v2-about-hero', 'v2-about-1', 'v2-about-2', 'v2-about-3'],
+  about: ['v2-about-hero'],
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {

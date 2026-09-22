@@ -212,16 +212,17 @@ function exDims(m, root) {
         return { i, on, x: (tmp.x + 1) / 2 * w, y: (1 - tmp.y) / 2 * h, dy: 0, d: el._dims[i] };
       });
       // выноска не должна выходить за холст: на узком экране короче стрелка, при нехватке места
-      // подпись переносится на другую сторону; затем подписи одной стороны раздвигаются по вертикали
+      // подпись уходит на другую сторону; затем подписи одной стороны раздвигаются по вертикали
       const gap = w < 700 ? 28 : G;
       rows.forEach((r) => {
         if (!r.d || !r.on) return;
-        let left = r.d.getAttribute('data-side') === 'l';
         const txt = r.d.children[2];
         r.tw = (txt && txt.offsetWidth) || 120;
-        const fits = (l) => (l ? r.x - gap - r.tw >= 4 : r.x + gap + r.tw <= w - 4);
-        if (!fits(left) && fits(!left)) left = !left;
-        r.left = left;
+        // Сторона задана разметкой (data-side) и не меняется никогда. Раньше она
+        // выбиралась по месту в каждом кадре, и при повороте модели подпись
+        // перескакивала слева направо. Если места не хватает — подпись остаётся на
+        // своей стороне и поджимается к краю холста (ниже, при расчёте gx).
+        r.left = r.d.getAttribute('data-side') === 'l';
       });
       [true, false].forEach((side) => {
         const g = rows.filter((r) => r.d && r.on && r.left === side);

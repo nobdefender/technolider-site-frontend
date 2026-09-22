@@ -281,7 +281,7 @@ export function LeadForm() {
       <div className={styles.formFoot}>
         <span className={styles.formNote} role="status">
           {status === 'sent' ? (
-            'Заявка отправлена. Ответим в рабочий день.'
+            'Заявка отправлена, в ближайшее время свяжемся с Вами.'
           ) : status === 'error' ? (
             FAIL_TEXT[failReason]
           ) : (

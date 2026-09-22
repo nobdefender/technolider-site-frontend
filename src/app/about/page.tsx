@@ -120,19 +120,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className={`wrap ${styles.secProd}`}>
-        <span className="kicker kicker--700 mb24">Производство</span>
-        <div className={shared.photoGrid}>
-          <div className={`duotone ${shared.photoCell} ${shared.photo43}`} data-photo>
-            <ImageSlot id="v2-about-1" placeholder="Фото: станочный парк" />
-          </div>
-          <div className={`duotone ${shared.photoCell} ${shared.photo43}`} data-photo>
-            <ImageSlot id="v2-about-2" placeholder="Фото: монтажный участок" />
-          </div>
-          <div className={`duotone ${shared.photoCell} ${shared.photo43}`} data-photo>
-            <ImageSlot id="v2-about-3" placeholder="Фото: испытательное оборудование" />
-          </div>
-        </div>
+      <section className={`wrap ${styles.secClose}`}>
         <div className={styles.aboutClose}>
           <p className={styles.aboutQuote} data-fit>
             Наше предприятие создано для решения нестандартных задач. Если ваше изделие требует

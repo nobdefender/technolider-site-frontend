@@ -1,7 +1,7 @@
 // Слоты изображений из дизайна (image-slot id → путь к файлу в /public).
 // В дизайне все слоты пустые (плейсхолдеры). Чтобы подставить фото,
 // положите файл в public/photos и укажите путь здесь, например:
-//   'v2-about-1': '/photos/shop.jpg'
+//   'v2-shop-1': '/photos/shop.jpg'
 export const images: Partial<Record<ImageSlotId, string>> = {
   'v2-about-photo': '/photos/about-workshop.webp',
   'v2-shop-1': '/photos/shop-hall.webp',
@@ -41,7 +41,4 @@ export type ImageSlotId =
   | 'v2-metal-hero'
   | 'v2-assembly-hero'
   | 'v2-docs-hero'
-  | 'v2-about-hero'
-  | 'v2-about-1'
-  | 'v2-about-2'
-  | 'v2-about-3';
+  | 'v2-about-hero';

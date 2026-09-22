@@ -2,6 +2,17 @@
 # Домен: npp-technolider.ru. HTTPS — через certbot:
 #   sudo certbot --nginx -d npp-technolider.ru -d www.npp-technolider.ru
 
+# Кириллический домен нпп-технолидер.рф — отдельным блоком, 301 на основной домен.
+# nginx кириллицу не понимает, имя пишется в punycode (получить: idn2 нпп-технолидер.рф).
+# Сертификат на этот домен тоже нужен, иначе до редиректа браузер покажет предупреждение:
+#   sudo certbot --nginx -d xn----htbcbnrlcjgaus7b.xn--p1ai -d www.xn----htbcbnrlcjgaus7b.xn--p1ai
+server {
+    listen 80;
+    listen [::]:80;
+    server_name xn----htbcbnrlcjgaus7b.xn--p1ai www.xn----htbcbnrlcjgaus7b.xn--p1ai;
+    return 301 https://npp-technolider.ru$request_uri;
+}
+
 server {
     listen 80;
     listen [::]:80;
