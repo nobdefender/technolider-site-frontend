@@ -1,9 +1,68 @@
 /* <image-slot> — плейсхолдер изображения (эквивалент image-slot.js макета). */
-.imageSlot { display:block; position:relative; width:100%; height:100%; aspect-ratio:3/2; font:13px/1.3 system-ui,-apple-system,sans-serif; color:inherit; }
-.imageSlotFrame { position:absolute; inset:0; overflow:hidden; background:rgba(127,127,127,.08); }
-.imageSlot img { position:absolute; inset:0; width:100%; height:100%; max-width:none; object-fit:cover; -webkit-user-drag:none; user-select:none; pointer-events:none; }
-.imageSlotEmpty { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; text-align:center; padding:12px; user-select:none; }
-.imageSlotEmpty svg { opacity:.45; }
-.imageSlotEmpty .cap { max-width:90%; font-weight:500; letter-spacing:.01em; opacity:.75; }
-.imageSlotRing { position:absolute; inset:0; pointer-events:none; border:1.5px dashed currentColor; opacity:.35; }
-.imageSlot[data-filled] .imageSlotRing { display:none; }
+.imageSlot {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3/2;
+  font:
+    13px/1.3 system-ui,
+    -apple-system,
+    sans-serif;
+  color: inherit;
+}
+
+.imageSlotFrame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: rgba(127, 127, 127, 0.08);
+}
+
+.imageSlot img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.imageSlotEmpty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  padding: 12px;
+  user-select: none;
+}
+
+.imageSlotEmpty svg {
+  opacity: 0.45;
+}
+
+.imageSlotEmpty .cap {
+  max-width: 90%;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  opacity: 0.75;
+}
+
+.imageSlotRing {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1.5px dashed currentColor;
+  opacity: 0.35;
+}
+
+.imageSlot[data-filled] .imageSlotRing {
+  display: none;
+}

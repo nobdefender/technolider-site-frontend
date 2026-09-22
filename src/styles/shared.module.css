@@ -1,33 +1,84 @@
 /* Блоки, которые повторяются на нескольких страницах: фото с параллаксом, список услуг, ряд кнопок, нумерованный список. */
 
 /* — фото — */
-.photoCell { overflow:hidden; }
+.photoCell {
+  overflow: hidden;
+}
+
 /* .par — класс, который навешивает PageEffects (параллакс + масштаб фото) */
-.photoCell :global(.par) { transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
-.photoCell:hover :global(.par) { transform:scale(1.05) !important; }
+.photoCell :global(.par) {
+  transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.photoCell:hover :global(.par) {
+  transform: scale(1.05) !important;
+}
+
 /* три фото в ряд; на ширинах, где три не помещаются — в один столбец (не 2+1) */
-.photoGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:2px; }
-@media (max-width:900px) { .photoGrid { grid-template-columns:minmax(0,1fr); } }
-.photo43 { aspect-ratio:4/3; background:var(--color-accent-900); }
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+}
+
+@media (max-width: 900px) {
+  .photoGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.photo43 {
+  aspect-ratio: 4/3;
+  background: var(--color-accent-900);
+}
+
 /* width:100% — иначе при max-height браузер пересчитывает ширину из aspect-ratio и блок не тянется на всю страницу */
-.photoWide { width:100%; aspect-ratio:21/8; background:var(--color-accent-900); max-height:560px; }
+.photoWide {
+  width: 100%;
+  aspect-ratio: 21/8;
+  background: var(--color-accent-900);
+  max-height: 560px;
+}
 
 /* — услуги: список (и раздел «Связаться» на 404) — */
-.secRows { padding-top:40px; padding-bottom:120px; }
+.secRows {
+  padding-top: 40px;
+  padding-bottom: 120px;
+}
 
 /* — ряд кнопок, нумерованный список — */
-.actions { display:flex; gap:14px; flex-wrap:wrap; }
-.numList { margin:0; padding:0; list-style:none; border-top:1px solid var(--color-divider); }
+.actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.numList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-divider);
+}
 
 /* WebKit: элементы сеток не растягивают колонку своим min-content (aspect-ratio, длинные слова) */
-.photoGrid > * { min-width:0; }
+.photoGrid > * {
+  min-width: 0;
+}
 
-@media (max-width:600px) {
-  .secRows { padding-top:8px; padding-bottom:48px; }
+@media (max-width: 600px) {
+  .secRows {
+    padding-top: 8px;
+    padding-bottom: 48px;
+  }
 }
 
 /* — сенсорные устройства: hover-эффекты не «залипают» после тапа — */
 @media (hover: none) {
-  .photoCell:hover :global(.par) { transform:none !important; }
-  .photoCell:hover :global(.par) { transform:scale(1.15) !important; }
+  .photoCell:hover :global(.par) {
+    transform: none !important;
+  }
+
+  .photoCell:hover :global(.par) {
+    transform: scale(1.15) !important;
+  }
 }

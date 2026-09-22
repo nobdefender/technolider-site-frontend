@@ -1,68 +1,266 @@
 /* «Как мы работаем» — закреплённый блок, шаги подсвечиваются по мере прокрутки. */
-.step { transition: transform .5s cubic-bezier(.2,.7,.2,1), border-color .5s; }
-.step:hover { transform:translateY(-8px); }
-.step:hover .stepN { color:var(--color-text); }
-.stepN { transition: color .5s; }
+.step {
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.5s;
+}
+
+.step:hover {
+  transform: translateY(-8px);
+}
+
+.step:hover .stepN {
+  color: var(--color-text);
+}
+
+.stepN {
+  transition: color 0.5s;
+}
+
 /* у .step свой transition, который перекрывал transition появления ([data-reveal]) —
    из-за этого прозрачность менялась скачком; здесь оба набора свойств объединены */
-.step[data-reveal] { transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), border-color .5s; }
-@media (max-width:1100px) { .steps { grid-template-columns:repeat(3,minmax(0,1fr)) !important } }
-@media (max-width:640px) { .steps { grid-template-columns:minmax(0,1fr) !important } }
+.step[data-reveal] {
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.5s;
+}
 
-.pinWrap { position:relative; height:260vh; }
-.pinStage { position:sticky; top:var(--nav-h,86px); min-height:calc(82vh - var(--nav-h,86px)); display:flex; flex-direction:column; justify-content:center; }
-.pinStep { cursor:pointer; opacity:.18; transition: opacity .5s, transform .5s cubic-bezier(.2,.7,.2,1), border-color .5s; }
-.pinStep[data-on] { opacity:1; }
-.pinStep .stepN { color:var(--color-neutral-400); }
-.pinStep[data-on] .stepN { color:var(--color-accent-700); }
-.pinLine { position:absolute; left:0; top:0; height:2px; background:var(--color-text); width:0; transition: width .5s cubic-bezier(.2,.7,.2,1); }
-@media (max-width:1100px) { .pinWrap { height:auto !important } .pinStage { position:static; min-height:0 } .pinStep { opacity:1 } }
+@media (max-width: 1100px) {
+  .steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .steps {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+.pinWrap {
+  position: relative;
+  height: 260vh;
+}
+
+.pinStage {
+  position: sticky;
+  top: var(--nav-h, 86px);
+  min-height: calc(82vh - var(--nav-h, 86px));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pinStep {
+  cursor: pointer;
+  opacity: 0.18;
+  transition:
+    opacity 0.5s,
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.5s;
+}
+
+.pinStep[data-on] {
+  opacity: 1;
+}
+
+.pinStep .stepN {
+  color: var(--color-neutral-400);
+}
+
+.pinStep[data-on] .stepN {
+  color: var(--color-accent-700);
+}
+
+.pinLine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 2px;
+  background: var(--color-text);
+  width: 0;
+  transition: width 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (max-width: 1100px) {
+  .pinWrap {
+    height: auto !important;
+  }
+
+  .pinStage {
+    position: static;
+    min-height: 0;
+  }
+
+  .pinStep {
+    opacity: 1;
+  }
+}
 
 /* тёмная секция */
-[data-dark] .pinStep { border-color:transparent !important }
-[data-dark] .pinStep p { color:var(--color-accent-200) !important }
-[data-dark] .pinStep .stepN { color:var(--color-accent-700) }
-[data-dark] .pinStep[data-on] .stepN { color:var(--color-accent-300) }
-[data-dark] .pinLine { background:var(--color-accent-300) }
-[data-dark] .step:hover .stepN { color:var(--color-bg) }
-@media (prefers-reduced-motion: reduce) { .pinWrap { height:auto !important } .pinStage { position:static } .pinStep { opacity:1 } }
+[data-dark] .pinStep {
+  border-color: transparent !important;
+}
 
-.secHow { background:var(--color-accent-900); color:var(--color-bg); }
-.howInner { padding-bottom:40px; }
-.howHead { display:flex; justify-content:space-between; align-items:end; gap:24px; flex-wrap:wrap; margin-bottom:56px; }
-.howTitle { margin:0; }
-.howCounter { font-family:var(--font-heading); font-size:clamp(40px,5vw,88px); line-height:1; letter-spacing:0; color:var(--color-neutral-300); font-weight:600; }
-.howTotal { font-size:.4em; color:var(--color-neutral-500); }
-.steps { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:32px 24px; position:relative; }
-.step { border-top:2px solid var(--color-divider); padding-top:24px; }
-.stepN { display:block; font-family:var(--font-heading); font-weight:600; font-size:56px; line-height:1; }
-.stepT { font-size:clamp(18px,1.6vw,24px); line-height:1.1; text-transform:uppercase; letter-spacing:0.02em; margin:24px 0 10px; }
-.stepP { margin:0; font-size:16px; line-height:24px; color:var(--color-neutral-800); }
+[data-dark] .pinStep p {
+  color: var(--color-accent-200) !important;
+}
 
-@media (max-width:900px) {
-  .steps .pinLine { display:none; }
+[data-dark] .pinStep .stepN {
+  color: var(--color-accent-700);
+}
+
+[data-dark] .pinStep[data-on] .stepN {
+  color: var(--color-accent-300);
+}
+
+[data-dark] .pinLine {
+  background: var(--color-accent-300);
+}
+
+[data-dark] .step:hover .stepN {
+  color: var(--color-bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pinWrap {
+    height: auto !important;
+  }
+
+  .pinStage {
+    position: static;
+  }
+
+  .pinStep {
+    opacity: 1;
+  }
+}
+
+.secHow {
+  background: var(--color-accent-900);
+  color: var(--color-bg);
+}
+
+.howInner {
+  padding-bottom: 40px;
+}
+
+.howHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+
+.howTitle {
+  margin: 0;
+}
+
+.howCounter {
+  font-family: var(--font-heading);
+  font-size: clamp(40px, 5vw, 88px);
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--color-neutral-300);
+  font-weight: 600;
+}
+
+.howTotal {
+  font-size: 0.4em;
+  color: var(--color-neutral-500);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 32px 24px;
+  position: relative;
+}
+
+.step {
+  border-top: 2px solid var(--color-divider);
+  padding-top: 24px;
+}
+
+.stepN {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 56px;
+  line-height: 1;
+}
+
+.stepT {
+  font-size: clamp(18px, 1.6vw, 24px);
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 24px 0 10px;
+}
+
+.stepP {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-neutral-800);
+}
+
+@media (max-width: 900px) {
+  .steps .pinLine {
+    display: none;
+  }
 }
 
 /* — без закреплённой прокрутки шаги подсвечиваются по мере скролла — */
-@media (max-width:1100px) {
-  .pinStep { opacity:.3; cursor:pointer; }
-  .pinStep[data-on] { opacity:1; }
+@media (max-width: 1100px) {
+  .pinStep {
+    opacity: 0.3;
+    cursor: pointer;
+  }
+
+  .pinStep[data-on] {
+    opacity: 1;
+  }
 }
 
-@media (max-width:600px) {
-  .howInner { padding-bottom:16px; }
-  .howHead { margin-bottom:28px; }
-  .steps { gap:24px; }
+@media (max-width: 600px) {
+  .howInner {
+    padding-bottom: 16px;
+  }
+
+  .howHead {
+    margin-bottom: 28px;
+  }
+
+  .steps {
+    gap: 24px;
+  }
 }
 
-@media (max-width:480px) {
-  .howTitle { font-size:clamp(26px,8vw,36px); }
-  .stepN { font-size:44px; }
+@media (max-width: 480px) {
+  .howTitle {
+    font-size: clamp(26px, 8vw, 36px);
+  }
+
+  .stepN {
+    font-size: 44px;
+  }
 }
 
 /* — сенсорные устройства: hover-эффекты не «залипают» после тапа — */
 @media (hover: none) {
-  .step:hover { transform:none !important; }
-  .step:hover .stepN { color:var(--color-accent-700); }
-  [data-dark] .step:hover .stepN { color:var(--color-accent-700); }
+  .step:hover {
+    transform: none !important;
+  }
+
+  .step:hover .stepN {
+    color: var(--color-accent-700);
+  }
+
+  [data-dark] .step:hover .stepN {
+    color: var(--color-accent-700);
+  }
 }

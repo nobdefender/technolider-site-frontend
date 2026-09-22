@@ -1,3 +1,10 @@
 /* Контейнер виджета SmartCaptcha: занимает ширину колонки формы, но не шире виджета */
-.captcha { grid-column:1/-1; min-height:102px; max-width:340px; }
-.captcha :global(iframe) { border:0; }
+.captcha {
+  grid-column: 1/-1;
+  min-height: 102px;
+  max-width: 340px;
+}
+
+.captcha :global(iframe) {
+  border: 0;
+}

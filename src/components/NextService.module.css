@@ -1,44 +1,163 @@
 /* Блок «Следующая услуга» в конце страницы услуги. */
-.nextLink { text-decoration:none; color:var(--color-bg); }
-.nextLink:hover { color:var(--color-bg); }
-.nextLink h2, .nextLink .nextNum { transition:transform .7s cubic-bezier(.2,.7,.2,1), color .5s; }
-.nextLink:hover h2 { transform:translateX(10px); }
-.nextLink:hover .nextNum { color:var(--color-bg); }
-.nextArrow { display:inline-block; transition:transform .7s cubic-bezier(.2,.7,.2,1), color .5s; }
-.nextLink:hover .nextArrow { transform:translateX(14px); color:var(--color-bg); }
-/* Цвета .sheet-head и .tech внутри секции задают глобальные правила [data-dark] (globals.css) */
-
-.nextSec { background:var(--color-accent-800); color:var(--color-bg); padding:clamp(56px,7vw,104px) 0 clamp(48px,6vw,88px); border-bottom:1px solid var(--color-accent-700); }
-a.nextLink { display:grid; grid-template-columns:72px minmax(0,1fr) 56px; gap:24px; align-items:center; padding:36px 0; border-bottom:1px solid var(--color-accent-600); }
-.nextNum { font-family:var(--font-heading); font-weight:600; font-size:18px; letter-spacing:0.1em; color:var(--color-accent-300); }
-.nextTitle { font-size:clamp(26px,3.2vw,48px); line-height:1.02; letter-spacing:0.01em; text-transform:uppercase; margin:0; }
-.nextArrow { font-size:32px; line-height:1; text-align:right; color:var(--color-accent-300); }
-.nextFoot { display:flex; flex-wrap:wrap; gap:20px 40px; align-items:center; justify-content:space-between; padding-top:36px; }
-.nextNote { font-size:17px; line-height:26px; color:var(--color-accent-200); max-width:44ch; }
-.nextActions { display:flex; gap:20px; flex-wrap:wrap; align-items:center; }
-a.nextPhone { font-family:var(--font-heading); font-weight:600; font-size:22px; letter-spacing:0.03em; color:var(--color-bg); text-decoration:none; }
-a.nextPhone:hover { color:var(--color-bg); }
-
-@media (max-width:600px) {
-  .nextSec { padding:48px 0 44px; }
-  a.nextLink { grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"num arrow" "title title"; gap:12px 16px; padding:24px 0; }
-  a.nextLink > .nextNum { grid-area:num; }
-  a.nextLink > h2 { grid-area:title; }
-  a.nextLink > .nextArrow { grid-area:arrow; }
-  .nextFoot { padding-top:28px; }
+.nextLink {
+  text-decoration: none;
+  color: var(--color-bg);
 }
 
-@media (max-width:480px) {
-  .nextTitle { font-size:clamp(20px,6.2vw,26px); }
+.nextLink:hover {
+  color: var(--color-bg);
+}
+
+.nextLink h2,
+.nextLink .nextNum {
+  transition:
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    color 0.5s;
+}
+
+.nextLink:hover h2 {
+  transform: translateX(10px);
+}
+
+.nextLink:hover .nextNum {
+  color: var(--color-bg);
+}
+
+.nextArrow {
+  display: inline-block;
+  transition:
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    color 0.5s;
+}
+
+.nextLink:hover .nextArrow {
+  transform: translateX(14px);
+  color: var(--color-bg);
+}
+
+/* Цвета .sheet-head и .tech внутри секции задают глобальные правила [data-dark] (globals.css) */
+.nextSec {
+  background: var(--color-accent-800);
+  color: var(--color-bg);
+  padding: clamp(56px, 7vw, 104px) 0 clamp(48px, 6vw, 88px);
+  border-bottom: 1px solid var(--color-accent-700);
+}
+
+a.nextLink {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) 56px;
+  gap: 24px;
+  align-items: center;
+  padding: 36px 0;
+  border-bottom: 1px solid var(--color-accent-600);
+}
+
+.nextNum {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  color: var(--color-accent-300);
+}
+
+.nextTitle {
+  font-size: clamp(26px, 3.2vw, 48px);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.nextArrow {
+  font-size: 32px;
+  line-height: 1;
+  text-align: right;
+  color: var(--color-accent-300);
+}
+
+.nextFoot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 36px;
+}
+
+.nextNote {
+  font-size: 17px;
+  line-height: 26px;
+  color: var(--color-accent-200);
+  max-width: 44ch;
+}
+
+.nextActions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+a.nextPhone {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: 0.03em;
+  color: var(--color-bg);
+  text-decoration: none;
+}
+
+a.nextPhone:hover {
+  color: var(--color-bg);
+}
+
+@media (max-width: 600px) {
+  .nextSec {
+    padding: 48px 0 44px;
+  }
+
+  a.nextLink {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "num arrow" "title title";
+    gap: 12px 16px;
+    padding: 24px 0;
+  }
+
+  a.nextLink > .nextNum {
+    grid-area: num;
+  }
+
+  a.nextLink > h2 {
+    grid-area: title;
+  }
+
+  a.nextLink > .nextArrow {
+    grid-area: arrow;
+  }
+
+  .nextFoot {
+    padding-top: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nextTitle {
+    font-size: clamp(20px, 6.2vw, 26px);
+  }
 }
 
 /* — сенсорные устройства: hover-эффекты не «залипают» после тапа — */
 @media (hover: none) {
-  .nextLink:hover h2, .nextLink:hover .nextArrow { transform:none !important; }
+  .nextLink:hover h2,
+  .nextLink:hover .nextArrow {
+    transform: none !important;
+  }
 }
 
 /* стрелка получает [data-reveal] от PageEffects; при prefers-reduced-motion её transition, как и у всех
    [data-reveal] в globals.css, выключен (в исходном CSS это обеспечивал порядок правил) */
 @media (prefers-reduced-motion: reduce) {
-  .nextArrow[data-reveal] { transition:none; }
+  .nextArrow[data-reveal] {
+    transition: none;
+  }
 }

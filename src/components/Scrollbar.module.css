@@ -1,7 +1,51 @@
 /* Собственная полоса прокрутки: только ползунок поверх страницы (нативная скрыта в globals.css). */
-.scrollbar { position:fixed; top:0; right:0; bottom:0; width:14px; z-index:900; opacity:0; pointer-events:none; transition:opacity .4s; }
-.scrollbar[data-visible] { opacity:1; pointer-events:auto; }
-.scrollbarThumb { position:absolute; top:0; right:3px; width:6px; height:40px; border-radius:999px; background:var(--color-accent-500); opacity:.6; cursor:grab; transition:opacity .3s, background-color .3s, width .2s, right .2s; will-change:transform; }
-.scrollbar:hover .scrollbarThumb, .scrollbar[data-dragging] .scrollbarThumb { opacity:1; width:8px; right:2px; }
-.scrollbar[data-dragging] .scrollbarThumb { background:var(--color-accent-700); cursor:grabbing; }
-.scrollbar[data-dragging] { user-select:none; }
+.scrollbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  z-index: 900;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+.scrollbar[data-visible] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scrollbarThumb {
+  position: absolute;
+  top: 0;
+  right: 3px;
+  width: 6px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--color-accent-500);
+  opacity: 0.6;
+  cursor: grab;
+  transition:
+    opacity 0.3s,
+    background-color 0.3s,
+    width 0.2s,
+    right 0.2s;
+  will-change: transform;
+}
+
+.scrollbar:hover .scrollbarThumb,
+.scrollbar[data-dragging] .scrollbarThumb {
+  opacity: 1;
+  width: 8px;
+  right: 2px;
+}
+
+.scrollbar[data-dragging] .scrollbarThumb {
+  background: var(--color-accent-700);
+  cursor: grabbing;
+}
+
+.scrollbar[data-dragging] {
+  user-select: none;
+}

@@ -1,53 +1,213 @@
 /* Страница «О компании». */
-.secAboutIntro { padding-top:96px; padding-bottom:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:40px clamp(32px,6vw,120px); }
-.secComp { padding-top:120px; padding-bottom:0; }
-.compGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:32px 24px; }
-.comp { border-top:2px solid var(--color-accent-700); padding-top:24px; transition: transform .5s cubic-bezier(.2,.7,.2,1), border-color .5s; }
+.secAboutIntro {
+  padding-top: 96px;
+  padding-bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px clamp(32px, 6vw, 120px);
+}
+
+.secComp {
+  padding-top: 120px;
+  padding-bottom: 0;
+}
+
+.compGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px 24px;
+}
+
+.comp {
+  border-top: 2px solid var(--color-accent-700);
+  padding-top: 24px;
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.5s;
+}
+
 /* у .comp свой transition, который перекрывал transition появления ([data-reveal]) —
    из-за этого прозрачность менялась скачком; здесь оба набора свойств объединены */
-.comp[data-reveal] { transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), border-color .5s; }
-.comp:hover { transform:translateY(-8px); }
-.compN { transition: color .5s; }
-.comp:hover .compN { color:var(--color-text); }
-.compN { display:block; font-family:var(--font-heading); font-weight:600; font-size:40px; line-height:1; color:var(--color-accent-700); margin-bottom:20px; }
-.compP { margin:0; font-size:18px; line-height:1.4; }
-.secSystem { background:var(--color-neutral-200); margin-top:120px; }
-.systemGrid { padding-top:120px; padding-bottom:120px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:48px clamp(32px,6vw,120px); align-items:start; }
-.sysItem { display:grid; grid-template-columns:72px 1fr; gap:16px; padding:32px 0; border-bottom:1px solid var(--color-divider); }
-.sysN { font-family:var(--font-heading); font-weight:600; font-size:48px; line-height:1; color:var(--color-accent-700); }
-.sysT { font-size:26px; line-height:1.1; text-transform:uppercase; letter-spacing:0.02em; margin:6px 0 10px; }
-.secProd { padding-top:120px; padding-bottom:120px; }
-.aboutClose { margin-top:120px; display:flex; flex-direction:column; align-items:flex-start; gap:36px; border-top:1px solid var(--color-divider); padding-top:48px; }
-.aboutQuote { text-wrap:balance; overflow-wrap:normal; margin:0; font-family:var(--font-heading); font-weight:600; font-size:clamp(28px,2.8vw,40px); line-height:1.1; letter-spacing:0.01em; }
-.aboutCloseActions { display:flex; }
+.comp[data-reveal] {
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.5s;
+}
+
+.comp:hover {
+  transform: translateY(-8px);
+}
+
+.compN {
+  transition: color 0.5s;
+}
+
+.comp:hover .compN {
+  color: var(--color-text);
+}
+
+.compN {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--color-accent-700);
+  margin-bottom: 20px;
+}
+
+.compP {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.secSystem {
+  background: var(--color-neutral-200);
+  margin-top: 120px;
+}
+
+.systemGrid {
+  padding-top: 120px;
+  padding-bottom: 120px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 48px clamp(32px, 6vw, 120px);
+  align-items: start;
+}
+
+.sysItem {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 16px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.sysN {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--color-accent-700);
+}
+
+.sysT {
+  font-size: 26px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 6px 0 10px;
+}
+
+.secProd {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+
+.aboutClose {
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 36px;
+  border-top: 1px solid var(--color-divider);
+  padding-top: 48px;
+}
+
+.aboutQuote {
+  text-wrap: balance;
+  overflow-wrap: normal;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(28px, 2.8vw, 40px);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+
+.aboutCloseActions {
+  display: flex;
+}
 
 /* WebKit: элементы сеток не растягивают колонку своим min-content */
-.systemGrid > *, .secAboutIntro > *, .compGrid > * { min-width:0; }
+.systemGrid > *,
+.secAboutIntro > *,
+.compGrid > * {
+  min-width: 0;
+}
 
-@media (max-width:900px) {
+@media (max-width: 900px) {
   /* двухколоночные сетки — в одну колонку (minmax(320px) даёт слишком узкие колонки) */
-  .systemGrid, .secAboutIntro { grid-template-columns:minmax(0,1fr); }
+  .systemGrid,
+  .secAboutIntro {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
-@media (max-width:600px) {
-  .secAboutIntro { padding-top:56px; gap:24px; }
-  .secComp { padding-top:56px; }
-  .compGrid { gap:28px 20px; }
-  .secSystem { margin-top:56px; }
-  .systemGrid { padding-top:56px; padding-bottom:56px; gap:32px; }
-  .sysItem { grid-template-columns:48px 1fr; padding:24px 0; }
-  .sysN { font-size:36px; }
-  .sysT { font-size:22px; }
-  .secProd { padding-top:48px; padding-bottom:56px; }
-  .aboutClose { margin-top:48px; gap:24px; padding-top:28px; }
+@media (max-width: 600px) {
+  .secAboutIntro {
+    padding-top: 56px;
+    gap: 24px;
+  }
+
+  .secComp {
+    padding-top: 56px;
+  }
+
+  .compGrid {
+    gap: 28px 20px;
+  }
+
+  .secSystem {
+    margin-top: 56px;
+  }
+
+  .systemGrid {
+    padding-top: 56px;
+    padding-bottom: 56px;
+    gap: 32px;
+  }
+
+  .sysItem {
+    grid-template-columns: 48px 1fr;
+    padding: 24px 0;
+  }
+
+  .sysN {
+    font-size: 36px;
+  }
+
+  .sysT {
+    font-size: 22px;
+  }
+
+  .secProd {
+    padding-top: 48px;
+    padding-bottom: 56px;
+  }
+
+  .aboutClose {
+    margin-top: 48px;
+    gap: 24px;
+    padding-top: 28px;
+  }
 }
 
-@media (max-width:480px) {
-  .aboutQuote { font-size:clamp(22px,6vw,28px); }
+@media (max-width: 480px) {
+  .aboutQuote {
+    font-size: clamp(22px, 6vw, 28px);
+  }
 }
 
 /* — сенсорные устройства: hover-эффекты не «залипают» после тапа — */
 @media (hover: none) {
-  .comp:hover { transform:none !important; }
-  .comp:hover .compN { color:var(--color-accent-700); }
+  .comp:hover {
+    transform: none !important;
+  }
+
+  .comp:hover .compN {
+    color: var(--color-accent-700);
+  }
 }

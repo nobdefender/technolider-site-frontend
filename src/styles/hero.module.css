@@ -1,60 +1,229 @@
 /* Первые экраны страниц: тёмный фон, анимация появления, заголовки h1.
    Главный экран главной страницы — в app/page.module.css (свои классы поверх .heroRoot/.heroAnim). */
-.heroRoot { background:var(--color-accent-900); color:var(--color-bg); }
+.heroRoot {
+  background: var(--color-accent-900);
+  color: var(--color-bg);
+}
 
-@keyframes rise { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:none; } }
-.heroAnim > * { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
-.heroAnim > :nth-child(1) { animation-delay:.15s } .heroAnim > :nth-child(2) { animation-delay:.3s } .heroAnim > :nth-child(3) { animation-delay:.55s }
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.heroAnim > * {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.heroAnim > :nth-child(1) {
+  animation-delay: 0.15s;
+}
+
+.heroAnim > :nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.heroAnim > :nth-child(3) {
+  animation-delay: 0.55s;
+}
 
 /* — страница услуги: 3D-объект справа — */
-.heroService { position:relative; overflow:hidden; }
-.page3d { position:absolute; right:clamp(0px,4vw,72px); top:0; bottom:0; width:min(44vw,620px); pointer-events:none; }
-tile-3d.page3d { animation: rise 1.2s cubic-bezier(.2,.7,.2,1) .2s both; }
-@media (max-width:760px) { tile-3d.page3d { display:none !important } }
+.heroService {
+  position: relative;
+  overflow: hidden;
+}
 
-.heroBody { position:relative; padding-top:96px; padding-bottom:80px; }
-.h1Page { font-size:clamp(40px,5.2vw,96px); line-height:0.96; letter-spacing:0.01em; text-transform:uppercase; margin:0 0 0 -0.04em; max-width:min(100%,26ch); overflow-wrap:normal; }
-.h1Page.w24 { max-width:min(100%,24ch); }
-.h1Page > span { display:block; }
+.page3d {
+  position: absolute;
+  right: clamp(0px, 4vw, 72px);
+  top: 0;
+  bottom: 0;
+  width: min(44vw, 620px);
+  pointer-events: none;
+}
+
+tile-3d.page3d {
+  animation: rise 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s both;
+}
+
+@media (max-width: 760px) {
+  tile-3d.page3d {
+    display: none !important;
+  }
+}
+
+.heroBody {
+  position: relative;
+  padding-top: 96px;
+  padding-bottom: 80px;
+}
+
+.h1Page {
+  font-size: clamp(40px, 5.2vw, 96px);
+  line-height: 0.96;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0 0 0 -0.04em;
+  max-width: min(100%, 26ch);
+  overflow-wrap: normal;
+}
+
+.h1Page.w24 {
+  max-width: min(100%, 24ch);
+}
+
+.h1Page > span {
+  display: block;
+}
+
 /* Заголовок из двух строк (страница «Услуги»): каждая строка целиком, без ограничения 26ch */
-.h1Page.h1Lines { max-width:none; }
-@media (min-width:700px) { .h1Page.h1Lines > span { white-space:nowrap; } }
-.h1Doc { font-size:clamp(36px,4.6vw,80px); line-height:0.98; letter-spacing:0.01em; text-transform:uppercase; margin:0 0 0 -0.04em; max-width:min(100%,22ch); overflow-wrap:normal; }
-.heroSub { margin:32px 0 0; max-width:56ch; font-size:19px; line-height:1.5; color:var(--color-accent-200); }
-.heroSub.w46 { max-width:46ch; }
-.heroTag { margin:32px 0 0; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-accent-300); }
-.docMeta { display:flex; flex-wrap:wrap; gap:12px 40px; margin-top:40px; border-top:1px solid var(--color-accent-800); padding-top:20px; }
+.h1Page.h1Lines {
+  max-width: none;
+}
 
-@media (min-width:900px) { tile-3d.page3d + .heroAnim { padding-right:calc(min(44vw,620px) + clamp(0px,4vw,72px) + 48px) !important; } }
+@media (min-width: 700px) {
+  .h1Page.h1Lines > span {
+    white-space: nowrap;
+  }
+}
+
+.h1Doc {
+  font-size: clamp(36px, 4.6vw, 80px);
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0 0 0 -0.04em;
+  max-width: min(100%, 22ch);
+  overflow-wrap: normal;
+}
+
+.heroSub {
+  margin: 32px 0 0;
+  max-width: 56ch;
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--color-accent-200);
+}
+
+.heroSub.w46 {
+  max-width: 46ch;
+}
+
+.heroTag {
+  margin: 32px 0 0;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-300);
+}
+
+.docMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 40px;
+  margin-top: 40px;
+  border-top: 1px solid var(--color-accent-800);
+  padding-top: 20px;
+}
+
+@media (min-width: 900px) {
+  tile-3d.page3d + .heroAnim {
+    padding-right: calc(
+      min(44vw, 620px) + clamp(0px, 4vw, 72px) + 48px
+    ) !important;
+  }
+}
 
 /* — планшеты и небольшие десктопы (761–1200): 3D-объект страницы услуги справа от текста, во всю высоту
      первого экрана; кегль h1 ограничен шириной текстовой колонки («МЕТАЛЛООБРАБОТКА» ≈ 10.8 × font-size) — */
-@media (min-width:601px) and (max-width:1200px) {
-  .heroService tile-3d.page3d { display:block !important; right:var(--px); width:36vw; opacity:1; }
-  tile-3d.page3d + .heroAnim { padding-right:calc(36vw + var(--px) + 24px) !important; }
-  .heroService .h1Page { font-size:min(clamp(40px,5.2vw,96px), calc((100vw - 36vw - 2 * var(--px) - 24px) / 10.8)); max-width:none; }
+@media (min-width: 601px) and (max-width: 1200px) {
+  .heroService tile-3d.page3d {
+    display: block !important;
+    right: var(--px);
+    width: 36vw;
+    opacity: 1;
+  }
+
+  tile-3d.page3d + .heroAnim {
+    padding-right: calc(36vw + var(--px) + 24px) !important;
+  }
+
+  .heroService .h1Page {
+    font-size: min(
+      clamp(40px, 5.2vw, 96px),
+      calc((100vw - 36vw - 2 * var(--px) - 24px) / 10.8)
+    );
+    max-width: none;
+  }
 }
+
 /* — телефоны: 3D-объект отдельным блоком под заголовком — */
-@media (max-width:600px) {
-  .heroService { display:flex; flex-direction:column; }
-  .heroService > .heroAnim { order:1; padding-bottom:8px; }
-  .heroService tile-3d.page3d { display:block !important; position:static; order:2; width:100%; height:min(46vw,260px); opacity:1; margin:0 0 20px; }
+@media (max-width: 600px) {
+  .heroService {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .heroService > .heroAnim {
+    order: 1;
+    padding-bottom: 8px;
+  }
+
+  .heroService tile-3d.page3d {
+    display: block !important;
+    position: static;
+    order: 2;
+    width: 100%;
+    height: min(46vw, 260px);
+    opacity: 1;
+    margin: 0 0 20px;
+  }
 }
-@media (max-width:900px) {
-  .h1Doc { max-width:none; }
+
+@media (max-width: 900px) {
+  .h1Doc {
+    max-width: none;
+  }
 }
 
 /* — телефоны — */
-@media (max-width:600px) {
-  .heroBody { padding-top:64px; padding-bottom:56px; }
-  .docMeta { gap:8px 24px; }
+@media (max-width: 600px) {
+  .heroBody {
+    padding-top: 64px;
+    padding-bottom: 56px;
+  }
+
+  .docMeta {
+    gap: 8px 24px;
+  }
 }
 
 /* — узкие телефоны: длинные слова в заголовках («МЕТАЛЛООБРАБОТКА», «КОНФИДЕНЦИАЛЬНОСТИ») должны помещаться в экран — */
-@media (max-width:480px) {
-  .h1Page, .h1Page.w24 { font-size:clamp(26px,8vw,40px); max-width:none; }
-  .h1Doc { font-size:clamp(24px,6.8vw,36px); max-width:none; }
-  .heroSub { font-size:17px; margin-top:24px; }
+@media (max-width: 480px) {
+  .h1Page,
+  .h1Page.w24 {
+    font-size: clamp(26px, 8vw, 40px);
+    max-width: none;
+  }
+
+  .h1Doc {
+    font-size: clamp(24px, 6.8vw, 36px);
+    max-width: none;
+  }
+
+  .heroSub {
+    font-size: 17px;
+    margin-top: 24px;
+  }
 }
 
-@media (prefers-reduced-motion: reduce) { .heroAnim > * { animation:none } }
+@media (prefers-reduced-motion: reduce) {
+  .heroAnim > * {
+    animation: none;
+  }
+}

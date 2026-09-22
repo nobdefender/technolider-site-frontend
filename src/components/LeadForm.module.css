@@ -1,56 +1,308 @@
 /* Форма заявки (страница «Контакты»). Базовые .input / .field — в globals.css (дизайн-система). */
-.leadForm { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
-.leadForm :global(.input) { min-height:48px; }
-.leadForm :global(textarea.input) { min-height:140px; resize:none; }
+.leadForm {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.leadForm :global(.input) {
+  min-height: 48px;
+}
+
+.leadForm :global(textarea.input) {
+  min-height: 140px;
+  resize: none;
+}
+
 /* Сообщение об ошибке занимает промежуток сетки (20px) и не сдвигает раскладку формы */
-.leadForm :global(.field) { position:relative; }
-.fieldError { position:absolute; left:0; right:0; top:100%; margin-top:3px; font-size:12px; line-height:16px; color:var(--color-error); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.spanAll { grid-column:1/-1; }
+.leadForm :global(.field) {
+  position: relative;
+}
+
+.fieldError {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 3px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-error);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spanAll {
+  grid-column: 1/-1;
+}
+
 /* вложения: зона выбора и перетаскивания файлов */
-.drop { grid-column:1/-1; position:relative; display:flex; align-items:center; padding:18px 20px; background:var(--color-surface); transition:background .3s, border-color .3s; }
-.drop[data-over] { background:var(--color-accent-100); border-color:var(--color-accent-500); }
-.fileInput { position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
-.dropLabel { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; cursor:pointer; margin:0; }
-.dropAction { font-family:var(--font-heading); font-weight:600; font-size:14px; letter-spacing:0.08em; text-transform:uppercase; color:var(--color-accent-700); border-bottom:1px solid rgba(65,97,128,.4); }
-.drop:hover .dropAction { color:var(--color-accent-800); border-color:currentColor; }
-.fileInput:focus-visible + .dropLabel .dropAction { outline:2px solid var(--color-accent); outline-offset:3px; }
-.dropHint { font-size:12px; line-height:18px; color:var(--color-neutral-600); }
-.fileList { grid-column:1/-1; list-style:none; margin:12px 0 0; padding:0; border-top:1px solid var(--color-divider); }
-.fileItem { display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid var(--color-divider); font-size:14px; }
-.fileName { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.fileSize { font-size:12px; color:var(--color-neutral-600); font-variant-numeric:tabular-nums; }
-.fileRemove { width:24px; height:24px; padding:0; background:none; border:0; font-size:20px; line-height:1; color:var(--color-neutral-600); cursor:pointer; transition:color .25s; }
-.fileRemove:hover { color:var(--color-error); }
-.fileError { display:block; margin-top:8px; font-size:12px; line-height:16px; color:var(--color-error); }
+.drop {
+  grid-column: 1/-1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 18px 20px;
+  background: var(--color-surface);
+  transition:
+    background 0.3s,
+    border-color 0.3s;
+}
+
+.drop[data-over] {
+  background: var(--color-accent-100);
+  border-color: var(--color-accent-500);
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dropLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.dropAction {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-700);
+  border-bottom: 1px solid rgba(65, 97, 128, 0.4);
+}
+
+.drop:hover .dropAction {
+  color: var(--color-accent-800);
+  border-color: currentColor;
+}
+
+.fileInput:focus-visible + .dropLabel .dropAction {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.dropHint {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-neutral-600);
+}
+
+.fileList {
+  grid-column: 1/-1;
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--color-divider);
+}
+
+.fileItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-divider);
+  font-size: 14px;
+}
+
+.fileName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileSize {
+  font-size: 12px;
+  color: var(--color-neutral-600);
+  font-variant-numeric: tabular-nums;
+}
+
+.fileRemove {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--color-neutral-600);
+  cursor: pointer;
+  transition: color 0.25s;
+}
+
+.fileRemove:hover {
+  color: var(--color-error);
+}
+
+.fileError {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-error);
+}
 
 /* поле-ловушка для ботов: вне потока, недоступно людям */
-.honeypot { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
 
-.captcha { grid-column:1/-1; display:flex; align-items:center; gap:16px; padding:14px 18px; max-width:340px; }
-.captchaLabel { display:flex; align-items:center; gap:12px; cursor:pointer; flex:1; font-size:15px; }
-.captchaLabel input { width:22px; height:22px; accent-color:var(--color-accent); margin:0; }
-.captchaBrand { display:flex; flex-direction:column; align-items:flex-end; line-height:1.1; }
-.captchaName { font-family:var(--font-heading); font-weight:600; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--color-accent-700); }
-.captchaSub { font-size:10px; color:var(--color-neutral-600); }
-.formFoot { grid-column:1/-1; display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between; }
-.formNote { font-size:13px; color:var(--color-neutral-700); max-width:40ch; }
-.formNoteLink { color:var(--color-accent-700); text-decoration:none; border-bottom:1px solid rgba(65,97,128,.4); transition:border-color .3s, color .3s; }
-.formNoteLink:hover { color:var(--color-accent-800); border-color:currentColor; }
+.captcha {
+  grid-column: 1/-1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  max-width: 340px;
+}
+
+.captchaLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  flex: 1;
+  font-size: 15px;
+}
+
+.captchaLabel input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--color-accent);
+  margin: 0;
+}
+
+.captchaBrand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.1;
+}
+
+.captchaName {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-700);
+}
+
+.captchaSub {
+  font-size: 10px;
+  color: var(--color-neutral-600);
+}
+
+.formFoot {
+  grid-column: 1/-1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.formNote {
+  font-size: 13px;
+  color: var(--color-neutral-700);
+  max-width: 40ch;
+}
+
+.formNoteLink {
+  color: var(--color-accent-700);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(65, 97, 128, 0.4);
+  transition:
+    border-color 0.3s,
+    color 0.3s;
+}
+
+.formNoteLink:hover {
+  color: var(--color-accent-800);
+  border-color: currentColor;
+}
 
 /* кнопка отправки: «взводится», когда отмечена капча */
-.submitBtn { transition: background-color .4s cubic-bezier(.2,.7,.2,1), color .4s, opacity .4s, transform .5s cubic-bezier(.2,.7,.2,1); }
-.submitBtn[data-armed] { animation: arm .7s cubic-bezier(.2,.7,.2,1); }
-.submitBtn[data-armed] :global(.corner) { animation: armCorner .7s cubic-bezier(.2,.7,.2,1); }
-@keyframes arm { 0% { transform:translateY(0) } 34% { transform:translateY(-4px); box-shadow:0 0 0 0 var(--color-accent-300) } 100% { transform:translateY(0); box-shadow:0 0 0 16px transparent } }
-@keyframes armCorner { 0% { transform:scale(1) } 40% { transform:scale(1.55) } 100% { transform:scale(1) } }
-@media (prefers-reduced-motion: reduce) { .submitBtn[data-armed], .submitBtn[data-armed] :global(.corner) { animation:none } }
-:global(.btn).submitBtn { text-transform:uppercase; letter-spacing:0.1em; padding:16px 28px; font-size:14px; }
+.submitBtn {
+  transition:
+    background-color 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    color 0.4s,
+    opacity 0.4s,
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
 
-@media (max-width:600px) {
-  .formFoot :global(.btn) { width:100%; }
+.submitBtn[data-armed] {
+  animation: arm 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.submitBtn[data-armed] :global(.corner) {
+  animation: armCorner 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@keyframes arm {
+  0% {
+    transform: translateY(0);
+  }
+  34% {
+    transform: translateY(-4px);
+    box-shadow: 0 0 0 0 var(--color-accent-300);
+  }
+  100% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 16px transparent;
+  }
+}
+
+@keyframes armCorner {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.55);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submitBtn[data-armed],
+  .submitBtn[data-armed] :global(.corner) {
+    animation: none;
+  }
+}
+
+:global(.btn).submitBtn {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 16px 28px;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .formFoot :global(.btn) {
+    width: 100%;
+  }
 }
 
 /* — iOS: поля ввода не меньше 16px, иначе Safari приближает страницу при фокусе — */
-@media (max-width:900px) {
-  .leadForm :global(.input) { font-size:16px; }
+@media (max-width: 900px) {
+  .leadForm :global(.input) {
+    font-size: 16px;
+  }
 }

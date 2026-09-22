@@ -1,42 +1,196 @@
 /* Секция «разнесённый вид»: закреплённая 3D-сцена и список шагов справа. */
-.exStep { cursor:pointer; }
-.exStep:hover { opacity:.6; }
-.exStep[data-on]:hover { opacity:1; }
-/* шаги разнесённого вида кликабельны на всех устройствах (на телефоне — переводят сцену к шагу) */
-.exStep:active { opacity:.6; }
-
-.exGrid { width:100%; display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:clamp(24px,4vw,80px); align-items:start; max-width:1320px; margin:0 auto; padding:0 clamp(20px,5vw,72px); box-sizing:border-box; }
-.exStage { position:sticky; top:var(--nav-h,86px); min-height:calc(82vh - var(--nav-h,86px)); display:flex; align-items:center; padding:clamp(48px,8vh,96px) 0 32px; box-sizing:border-box; }
-.exCanvas { position:relative; height:min(54vh,560px); }
-.exStep { display:grid; grid-template-columns:52px minmax(0,1fr) auto; gap:16px; align-items:baseline; padding:14px 0; border-bottom:1px solid var(--color-accent-800); opacity:.2; transform:translateY(8px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
-.exStep[data-on] { opacity:1; transform:none; }
-@media (max-width:1100px) { .exHint { display:none } .secExplode { height:auto !important } .exGrid { grid-template-columns:minmax(0,1fr); padding-top:80px; padding-bottom:80px } .exStage { position:static; height:auto } .exCanvas { height:56vh } .exStep { opacity:1; transform:none } }
-@media (prefers-reduced-motion: reduce) { .secExplode { height:auto !important } .exStage { position:static; height:auto } .exStep { opacity:1; transform:none } }
-
-.secExplode { position:relative; background:var(--color-accent-900); color:var(--color-bg); height:360vh; }
-.secExplode.h340 { height:340vh; }
-.ex3d { position:absolute; inset:0; }
-.exLead { margin:0 0 40px; font-size:17px; line-height:26px; color:var(--color-accent-200); max-width:42ch; }
-.exList { border-top:1px solid var(--color-accent-800); }
-.exN { font-family:var(--font-heading); font-weight:600; font-size:15px; letter-spacing:0.1em; color:var(--color-accent-300); }
-
-/* WebKit: элементы сетки не растягивают колонку своим min-content */
-.exGrid > * { min-width:0; }
-
-@media (max-width:1100px) {
-  .exStage { padding:0; min-height:0; }
+.exStep {
+  cursor: pointer;
 }
 
-@media (max-width:600px) {
-  .exCanvas { height:48vh; }
-  .exGrid { padding-top:48px !important; padding-bottom:48px !important; gap:28px; }
-  .exGrid :global(.sheet-head.mb64) { margin-bottom:24px !important; }
-  .exLead { margin-bottom:24px; }
-  .exStep { grid-template-columns:40px minmax(0,1fr); }
-  .exStep > :global(.tech) { grid-column:2; }
+.exStep:hover {
+  opacity: 0.6;
+}
+
+.exStep[data-on]:hover {
+  opacity: 1;
+}
+
+/* шаги разнесённого вида кликабельны на всех устройствах (на телефоне — переводят сцену к шагу) */
+.exStep:active {
+  opacity: 0.6;
+}
+
+.exGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 80px);
+  align-items: start;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 72px);
+  box-sizing: border-box;
+}
+
+.exStage {
+  position: sticky;
+  top: var(--nav-h, 86px);
+  min-height: calc(82vh - var(--nav-h, 86px));
+  display: flex;
+  align-items: center;
+  padding: clamp(48px, 8vh, 96px) 0 32px;
+  box-sizing: border-box;
+}
+
+.exCanvas {
+  position: relative;
+  height: min(54vh, 560px);
+}
+
+.exStep {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-accent-800);
+  opacity: 0.2;
+  transform: translateY(8px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.exStep[data-on] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 1100px) {
+  .exHint {
+    display: none;
+  }
+
+  .secExplode {
+    height: auto !important;
+  }
+
+  .exGrid {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .exStage {
+    position: static;
+    height: auto;
+  }
+
+  .exCanvas {
+    height: 56vh;
+  }
+
+  .exStep {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .secExplode {
+    height: auto !important;
+  }
+
+  .exStage {
+    position: static;
+    height: auto;
+  }
+
+  .exStep {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.secExplode {
+  position: relative;
+  background: var(--color-accent-900);
+  color: var(--color-bg);
+  height: 360vh;
+}
+
+.secExplode.h340 {
+  height: 340vh;
+}
+
+.ex3d {
+  position: absolute;
+  inset: 0;
+}
+
+.exLead {
+  margin: 0 0 40px;
+  font-size: 17px;
+  line-height: 26px;
+  color: var(--color-accent-200);
+  max-width: 42ch;
+}
+
+.exList {
+  border-top: 1px solid var(--color-accent-800);
+}
+
+.exN {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  color: var(--color-accent-300);
+}
+
+/* WebKit: элементы сетки не растягивают колонку своим min-content */
+.exGrid > * {
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .exStage {
+    padding: 0;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .exCanvas {
+    height: 48vh;
+  }
+
+  .exGrid {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+    gap: 28px;
+  }
+
+  .exGrid :global(.sheet-head.mb64) {
+    margin-bottom: 24px !important;
+  }
+
+  .exLead {
+    margin-bottom: 24px;
+  }
+
+  .exStep {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+
+  .exStep > :global(.tech) {
+    grid-column: 2;
+  }
 }
 
 /* — сенсорные устройства — */
 @media (hover: none) {
-  .exStep:hover { opacity:.2; } .exStep[data-on]:hover { opacity:1; }
+  .exStep:hover {
+    opacity: 0.2;
+  }
+
+  .exStep[data-on]:hover {
+    opacity: 1;
+  }
 }

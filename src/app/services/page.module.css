@@ -1,41 +1,150 @@
 /* Страница «Услуги»: список направлений. */
+
 /* у .rowLink свой transition, который перекрывал transition появления ([data-reveal]) —
    из-за этого прозрачность менялась скачком; здесь оба набора свойств объединены */
-.rowLink[data-reveal] { transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), background .4s, border-color .4s; }
-.rowLink { transition: background .4s, border-color .4s; padding-left:24px !important; padding-right:24px !important; margin:0 -24px; }
-.rowLink:hover { background:var(--color-accent-100); border-color:var(--color-accent-300) !important; }
-.rowLink .arrow { display:inline-block; font-family:var(--font-heading); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
-.rowLink:hover .arrow { transform:translateX(10px); }
+.rowLink[data-reveal] {
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background 0.4s,
+    border-color 0.4s;
+}
 
-a.rowLink { display:grid; grid-template-columns:72px minmax(0,1.2fr) minmax(0,1fr) 48px; gap:24px; align-items:start; padding:48px 0; border-bottom:1px solid var(--color-divider); text-decoration:none; color:var(--color-text); }
-a.rowLink:hover { color:var(--color-text); }
-.rowN { font-family:var(--font-heading); font-weight:600; font-size:18px; letter-spacing:0.1em; color:var(--color-accent-700); padding-top:6px; }
-.rowTitle { font-size:clamp(28px,3vw,44px); line-height:1; letter-spacing:0.01em; text-transform:uppercase; margin:0 0 12px; }
-.rowSub { font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-neutral-700); }
-.rowP { margin:0; color:var(--color-neutral-800); font-size:16px; line-height:24px; }
-.rowArrow { font-size:28px; line-height:1; color:var(--color-accent-700); text-align:right; }
+.rowLink {
+  transition:
+    background 0.4s,
+    border-color 0.4s;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  margin: 0 -24px;
+}
 
-@media (max-width:900px) {
+.rowLink:hover {
+  background: var(--color-accent-100);
+  border-color: var(--color-accent-300) !important;
+}
+
+.rowLink .arrow {
+  display: inline-block;
+  font-family: var(--font-heading);
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.rowLink:hover .arrow {
+  transform: translateX(10px);
+}
+
+a.rowLink {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1.2fr) minmax(0, 1fr) 48px;
+  gap: 24px;
+  align-items: start;
+  padding: 48px 0;
+  border-bottom: 1px solid var(--color-divider);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+a.rowLink:hover {
+  color: var(--color-text);
+}
+
+.rowN {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  color: var(--color-accent-700);
+  padding-top: 6px;
+}
+
+.rowTitle {
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+
+.rowSub {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-neutral-700);
+}
+
+.rowP {
+  margin: 0;
+  color: var(--color-neutral-800);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.rowArrow {
+  font-size: 28px;
+  line-height: 1;
+  color: var(--color-accent-700);
+  text-align: right;
+}
+
+@media (max-width: 900px) {
   /* строки услуг: номер | название + описание | стрелка справа от названия */
-  a.rowLink { grid-template-columns:40px minmax(0,1fr) 28px; grid-template-areas:"num title arrow" "num p p"; }
+  a.rowLink {
+    grid-template-columns: 40px minmax(0, 1fr) 28px;
+    grid-template-areas: "num title arrow" "num p p";
+  }
+
   /* номер и стрелка — по оси первой строки названия */
-  a.rowLink > .rowN { grid-area:num; padding-top:0; line-height:1.15; }
-  a.rowLink > div { grid-area:title; }
-  a.rowLink > .rowP { grid-area:p; }
-  a.rowLink > .rowArrow { grid-area:arrow; text-align:right; font-size:22px; line-height:1; padding-top:0; }
+  a.rowLink > .rowN {
+    grid-area: num;
+    padding-top: 0;
+    line-height: 1.15;
+  }
+
+  a.rowLink > div {
+    grid-area: title;
+  }
+
+  a.rowLink > .rowP {
+    grid-area: p;
+  }
+
+  a.rowLink > .rowArrow {
+    grid-area: arrow;
+    text-align: right;
+    font-size: 22px;
+    line-height: 1;
+    padding-top: 0;
+  }
 }
 
-@media (max-width:600px) {
-  .rowLink { margin:0 -12px; padding-left:12px !important; padding-right:12px !important; }
-  a.rowLink { padding:28px 0; gap:16px; }
+@media (max-width: 600px) {
+  .rowLink {
+    margin: 0 -12px;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  a.rowLink {
+    padding: 28px 0;
+    gap: 16px;
+  }
 }
 
-@media (max-width:480px) {
-  .rowTitle { font-size:clamp(18px,5.2vw,28px); }
+@media (max-width: 480px) {
+  .rowTitle {
+    font-size: clamp(18px, 5.2vw, 28px);
+  }
 }
 
 /* — сенсорные устройства: hover-эффекты не «залипают» после тапа — */
 @media (hover: none) {
-  .rowLink:hover .arrow { transform:none !important; }
-  .rowLink:hover { background:transparent; border-color:var(--color-divider) !important; }
+  .rowLink:hover .arrow {
+    transform: none !important;
+  }
+
+  .rowLink:hover {
+    background: transparent;
+    border-color: var(--color-divider) !important;
+  }
 }
